@@ -1,131 +1,160 @@
 const pool = require('../config/db');
 
 const Cirugia = {
-  /**
-   * Crea una nueva cirugía en la base de datos.
-   */
   async create(cirugiaData) {
-    const {
-      id_expediente, fecha, diagnostico_pre, procedimiento,
-      id_quirófano, id_equipomedico, estado, // Estado viene del formulario
-      // Otros campos que podrían venir del frontend (aunque no estén en el INSERT de ejemplo)
-      diagnostico_post, resultado, creado_por
+    const { 
+      id_expediente,
+      fecha, 
+      diagnostico_pre, 
+      diagnostico_post, 
+      procedimiento, 
+      resultado, 
+      id_quirófano, 
+      id_equipomedico, 
+      estado 
     } = cirugiaData;
 
-    // Aseguramos que la fecha tenga el formato correcto si viene como string
-    const fechaCirugia = fecha ? new Date(fecha) : new Date(); 
-
     const query = `
-      INSERT INTO cirugias (
-        id_expediente, fecha, diagnostico_pre, procedimiento, 
-        id_quirófano, id_equipomedico, estado, diagnostico_post, resultado, creado_por
-      ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
+      INSERT INTO cirugias 
+        (id_expediente, fecha, diagnostico_pre, diagnostico_post, procedimiento, resultado, id_quirófano, id_equipomedico, estado) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
       RETURNING *
     `;
+    
     const values = [
-      id_expediente, fechaCirugia, diagnostico_pre, procedimiento,
-      id_quirófano, id_equipomedico, estado || 'Programada', // Valor por defecto si no viene
-      diagnostico_post, resultado, creado_por || 'sistema'
+      id_expediente, 
+      fecha, 
+      diagnostico_pre || '', 
+      diagnostico_post || '', 
+      procedimiento, 
+      resultado || '', 
+      id_quirófano, 
+      id_equipomedico, 
+      estado || 'programada'
     ];
 
     try {
       const { rows } = await pool.query(query, values);
       return rows[0];
     } catch (error) {
-      console.error('Error al insertar cirugía en el modelo:', error);
+      console.error('Error al crear cirugía en el modelo:', error);
       throw error;
     }
   },
 
-  /**
-   * Obtiene todas las cirugías con detalles de tablas relacionadas.
-   */
   async findAllDetailed() {
     const query = `
       SELECT 
-        ci.id_cirugia,
-        ci.fecha,
-        ci.estado,
-        ex.numero_expediente,
-        p.nombre AS paciente_nombre,
-        p.apellido AS paciente_apellido,
-        ci.diagnostico_pre,
-        ci.procedimiento,
-        q.sala AS quirofano_sala,
-        eq.nombre AS equipo_nombre,
-        ci.diagnostico_post,
-        ci.resultado
-      FROM cirugias ci 
-      LEFT JOIN expedientes ex ON ci.id_expediente = ex.id_expediente
-      LEFT JOIN pacientes p ON ex.id_paciente = p.id_paciente
-      LEFT JOIN quirofanos q ON ci."id_quirófano" = q.id_quirofano -- Asegúrate que el nombre de columna id_quirofano sea correcto
-      LEFT JOIN equipo_medico eq ON ci.id_equipomedico = eq.id_equipomedico
-      ORDER BY ci.fecha DESC, ci.id_cirugia DESC;
+        c.id_cirugia,
+        c.id_expediente,
+        c.fecha,
+        c.diagnostico_pre,
+        c.diagnostico_post,
+        c.procedimiento,
+        c.resultado,
+        c.id_quirófano,
+        c.id_equipomedico,
+        c.estado,
+        c.creado_en,
+        c.actualizado_en,
+        c.creado_por,
+        p.nombre as paciente_nombre,
+        p.apellido as paciente_apellido,
+        eq.nombre as equipo_nombre,
+        q.sala as quirofano_sala  -- CORREGIDO: q.nombre → q.sala
+      FROM cirugias c
+      LEFT JOIN pacientes p ON c.id_expediente = p.id_paciente
+      LEFT JOIN equipo_medico eq ON c.id_equipomedico = eq.id_equipomedico
+      LEFT JOIN quirofanos q ON c.id_quirófano = q.id_quirófano
+      ORDER BY c.fecha DESC
     `;
+    
     try {
       const { rows } = await pool.query(query);
       return rows;
     } catch (error) {
-      console.error('Error al obtener cirugías detalladas:', error);
+      console.error('Error en findAllDetailed:', error);
       throw error;
     }
   },
 
-  /**
-   * Busca una cirugía por su ID (útil para actualizar o ver detalles específicos).
-   */
-    async findById(id) {
-        const query = 'SELECT * FROM cirugias WHERE id_cirugia = $1';
-        try {
-            const { rows } = await pool.query(query, [id]);
-            return rows[0];
-        } catch (error) {
-            console.error(`Error al buscar cirugía con ID ${id}:`, error);
-            throw error;
-        }
-    },
-
-  /**
-   * Actualiza una cirugía existente por su ID.
-   */
-  async update(id, cirugiaData) {
-    const {
-      fecha, diagnostico_pre, procedimiento, id_quirófano, 
-      id_equipomedico, estado, diagnostico_post, resultado
-    } = cirugiaData;
+  async findById(id) {
+    const query = `
+      SELECT 
+        c.id_cirugia,
+        c.id_expediente,
+        c.fecha,
+        c.diagnostico_pre,
+        c.diagnostico_post,
+        c.procedimiento,
+        c.resultado,
+        c.id_quirófano,
+        c.id_equipomedico,
+        c.estado,
+        c.creado_en,
+        c.actualizado_en,
+        c.creado_por,
+        p.nombre as paciente_nombre,
+        p.apellido as paciente_apellido,
+        eq.nombre as equipo_nombre,
+        q.sala as quirofano_sala  -- CORREGIDO: q.nombre → q.sala
+      FROM cirugias c
+      LEFT JOIN pacientes p ON c.id_expediente = p.id_paciente
+      LEFT JOIN equipo_medico eq ON c.id_equipomedico = eq.id_equipomedico
+      LEFT JOIN quirofanos q ON c.id_quirófano = q.id_quirófano
+      WHERE c.id_cirugia = $1
+    `;
     
-    // Aseguramos que la fecha tenga el formato correcto
-    const fechaCirugia = fecha ? new Date(fecha) : undefined; 
-
-    // Construimos la consulta dinámicamente para actualizar solo los campos presentes
-    const fields = [];
-    const values = [];
-    let queryIndex = 1;
-
-    if (fechaCirugia !== undefined) { fields.push(`fecha = $${queryIndex++}`); values.push(fechaCirugia); }
-    if (diagnostico_pre !== undefined) { fields.push(`diagnostico_pre = $${queryIndex++}`); values.push(diagnostico_pre); }
-    if (procedimiento !== undefined) { fields.push(`procedimiento = $${queryIndex++}`); values.push(procedimiento); }
-    if (id_quirófano !== undefined) { fields.push(`id_quirófano = $${queryIndex++}`); values.push(id_quirófano); }
-    if (id_equipomedico !== undefined) { fields.push(`id_equipomedico = $${queryIndex++}`); values.push(id_equipomedico); }
-    if (estado !== undefined) { fields.push(`estado = $${queryIndex++}`); values.push(estado); }
-    if (diagnostico_post !== undefined) { fields.push(`diagnostico_post = $${queryIndex++}`); values.push(diagnostico_post); }
-    if (resultado !== undefined) { fields.push(`resultado = $${queryIndex++}`); values.push(resultado); }
-    
-    // Si no hay campos para actualizar, no hacemos nada
-    if (fields.length === 0) {
-        return this.findById(id); // Devolvemos el registro sin cambios
+    try {
+      const { rows } = await pool.query(query, [id]);
+      return rows[0];
+    } catch (error) {
+      console.error('Error al buscar cirugía por ID:', error);
+      throw error;
     }
+  },
 
-    fields.push(`actualizado_en = CURRENT_TIMESTAMP`); // Siempre actualizamos la fecha de modificación
-    values.push(id); // El ID va al final para la cláusula WHERE
+  async update(id, cirugiaData) {
+    const { 
+      id_expediente, 
+      fecha, 
+      diagnostico_pre, 
+      diagnostico_post, 
+      procedimiento, 
+      resultado, 
+      id_quirófano, 
+      id_equipomedico, 
+      estado 
+    } = cirugiaData;
 
     const query = `
       UPDATE cirugias 
-      SET ${fields.join(', ')} 
-      WHERE id_cirugia = $${queryIndex}
+      SET id_expediente = $1, 
+          fecha = $2, 
+          diagnostico_pre = $3, 
+          diagnostico_post = $4, 
+          procedimiento = $5, 
+          resultado = $6, 
+          id_quirófano = $7, 
+          id_equipomedico = $8, 
+          estado = $9, 
+          actualizado_en = CURRENT_TIMESTAMP
+      WHERE id_cirugia = $10
       RETURNING *
     `;
+    
+    const values = [
+      id_expediente, 
+      fecha, 
+      diagnostico_pre, 
+      diagnostico_post, 
+      procedimiento, 
+      resultado, 
+      id_quirófano, 
+      id_equipomedico, 
+      estado, 
+      id
+    ];
 
     try {
       const { rows } = await pool.query(query, values);
@@ -136,14 +165,11 @@ const Cirugia = {
     }
   },
 
-  /**
-   * Elimina una cirugía por su ID.
-   */
   async remove(id) {
     const query = 'DELETE FROM cirugias WHERE id_cirugia = $1';
     try {
       const result = await pool.query(query, [id]);
-      return result.rowCount; // Devuelve 1 si se eliminó, 0 si no se encontró
+      return result.rowCount;
     } catch (error) {
       console.error('Error al eliminar cirugía en el modelo:', error);
       throw error;

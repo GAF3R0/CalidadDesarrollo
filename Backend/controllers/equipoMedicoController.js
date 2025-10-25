@@ -44,15 +44,50 @@ exports.obtenerEquipoPorNombre = async (req, res) => {
  */
 exports.obtenerTodosLosEquipos = async (req, res) => {
   try {
-    // Llama a la función que solo trae los nombres
-    const equipos = await EquipoMedico.findAllTeamNames(); 
-    // Devolvemos solo un array de strings para que sea más fácil de usar en el frontend
-    res.json(equipos.map(e => e.nombre)); 
+    // Obtener todos los equipos completos con miembros
+    const equiposCompletos = await EquipoMedico.findCompleteTeams();
+    
+    console.log('Equipos completos desde BD:', equiposCompletos); // Para debug
+    
+    // Agrupar por nombre de equipo
+    const equiposAgrupados = {};
+    
+    equiposCompletos.forEach(entry => {
+      const nombreEquipo = entry.nombre_equipo;
+      
+      if (!equiposAgrupados[nombreEquipo]) {
+        equiposAgrupados[nombreEquipo] = {
+          nombre: nombreEquipo,
+          miembros: []
+        };
+      }
+      
+      // Solo agregar si tiene un médico asignado
+      if (entry.id_medicos) {
+        equiposAgrupados[nombreEquipo].miembros.push({
+          id_equipomedico: entry.id_equipomedico,
+          id_medicos: entry.id_medicos,
+          medico_nombre: entry.medico_nombre,
+          apellido_paterno: entry.apellido_paterno,
+          apellido_materno: entry.apellido_materno,
+          especialidad: entry.especialidad
+        });
+      }
+    });
+    
+    // Convertir a array
+    const resultado = Object.values(equiposAgrupados);
+    
+    console.log('Equipos agrupados para frontend:', resultado); // Para debug
+    
+    res.json(resultado);
+    
   } catch (error) {
     console.error('Error al obtener todos los equipos:', error);
     res.status(500).json({ msg: 'Error en el servidor.' });
   }
 };
+
 
 /**
  * FUNCIÓN NUEVA: Obtiene todas las entradas de la tabla equipo_medico.
@@ -67,6 +102,46 @@ exports.obtenerTodasLasEntradas = async (req, res) => {
         res.status(500).json({ msg: 'Error en el servidor.' });
     }
 };
+
+/**
+ * FUNCIÓN NUEVA: Obtiene equipos completos con información detallada
+ */
+exports.obtenerEquiposCompletos = async (req, res) => {
+    try {
+        const equipos = await EquipoMedico.findCompleteTeams();
+        res.json(equipos);
+    } catch (error) {
+        console.error('Error al obtener equipos completos:', error);
+        res.status(500).json({ msg: 'Error en el servidor.' });
+    }
+};
+
+/**
+ * FUNCIÓN NUEVA: Obtiene estadísticas de equipos
+ */
+exports.obtenerEstadisticasEquipos = async (req, res) => {
+    try {
+        const stats = await EquipoMedico.countMembersByTeam();
+        res.json(stats);
+    } catch (error) {
+        console.error('Error al obtener estadísticas de equipos:', error);
+        res.status(500).json({ msg: 'Error en el servidor.' });
+    }
+};
+
+/**
+ * FUNCIÓN NUEVA: Obtiene equipos vacíos
+ */
+exports.obtenerEquiposVacios = async (req, res) => {
+    try {
+        const equiposVacios = await EquipoMedico.findEmptyTeams();
+        res.json(equiposVacios);
+    } catch (error) {
+        console.error('Error al obtener equipos vacíos:', error);
+        res.status(500).json({ msg: 'Error en el servidor.' });
+    }
+};
+
 /**
  * Actualiza el médico asignado a una entrada específica del equipo.
  * Se identifica la entrada por su ID (id_equipomedico).
@@ -119,6 +194,24 @@ exports.eliminarMiembroEquipo = async (req, res) => {
     res.json({ msg: 'Miembro eliminado del equipo con éxito' });
   } catch (error) {
     console.error('Error al eliminar miembro del equipo:', error);
+    
+    // Manejar específicamente el error de clave foránea
+    if (error.code === '23503') {
+      return res.status(400).json({ 
+        msg: 'No se puede eliminar este miembro del equipo porque está asignado a una o más cirugías. Primero debe reasignar las cirugías a otro equipo médico.' 
+      });
+    }
+    
+    res.status(500).json({ msg: 'Error en el servidor.' });
+  }
+};
+
+exports.obtenerNombresEquipos = async (req, res) => {
+  try {
+    const equipos = await EquipoMedico.findAllTeamNames(); 
+    res.json(equipos.map(e => e.nombre));
+  } catch (error) {
+    console.error('Error al obtener nombres de equipos:', error);
     res.status(500).json({ msg: 'Error en el servidor.' });
   }
 };

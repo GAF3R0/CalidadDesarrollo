@@ -80,26 +80,55 @@ const EquipoMedico = () => {
     }
   };
   
-  // --- LÓGICA DE GESTIÓN (PASO 2) ---
+  // --- LÓGICA DE GESTIÓN (PASO 2) - CORREGIDO ---
   const handleGestionarEspecialistas = async (nombreEquipo) => {
     setLoading(true);
     setEquipoSeleccionadoNombre(nombreEquipo);
     setGestionandoEspecialistas(true);
     setError('');
     const token = localStorage.getItem('token');
+    
     try {
-      const response = await axios.get(`${API_BASE_URL}/equipos/${encodeURIComponent(nombreEquipo)}`, {
-         headers: { Authorization: `Bearer ${token}` }
+      // ✅ SOLUCIÓN: Obtener TODOS los equipos y filtrar localmente
+      const response = await axios.get(`${API_BASE_URL}/equipos`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      setMiembrosEquipoActual(Array.isArray(response.data) ? response.data : []);
-    } catch (err) {
-      if (err.response?.status === 404) {
-          setMiembrosEquipoActual([]);
+      
+      const todosLosEquipos = Array.isArray(response.data) ? response.data : [];
+      
+      // Buscar el equipo por nombre en la lista completa
+      const equipoEncontrado = todosLosEquipos.find(equipo => 
+        equipo.nombre === nombreEquipo || 
+        equipo.nombre_equipo === nombreEquipo
+      );
+      
+      if (equipoEncontrado) {
+        // Si el equipo tiene la propiedad 'miembros', usarla
+        if (equipoEncontrado.miembros && Array.isArray(equipoEncontrado.miembros)) {
+          setMiembrosEquipoActual(equipoEncontrado.miembros);
+        } else {
+          // Si no tiene miembros, intentar cargarlos específicamente
+          try {
+            const responseMiembros = await axios.get(`${API_BASE_URL}/equipos/miembros/${equipoEncontrado.id_equipo || equipoEncontrado.id}`, {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+            setMiembrosEquipoActual(Array.isArray(responseMiembros.data) ? responseMiembros.data : []);
+          } catch (miembrosError) {
+            // Si falla cargar miembros específicos, dejar array vacío
+            setMiembrosEquipoActual([]);
+          }
+        }
       } else {
-          setError(`Error al cargar los miembros del equipo ${nombreEquipo}.`);
+        setMiembrosEquipoActual([]);
+        setError(`Equipo "${nombreEquipo}" no encontrado`);
       }
+      
+    } catch (err) {
+      console.error('Error al cargar equipos:', err);
+      setError('Error al cargar los equipos. Verifique la conexión.');
+      setMiembrosEquipoActual([]);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -120,36 +149,43 @@ const EquipoMedico = () => {
   };
 
   const handleEliminarEspecialista = async (idEntradaEquipo) => {
-    if (!equipoSeleccionadoNombre) return;
-    if (window.confirm('¿Quitar a este especialista del equipo?')) {
+  if (!equipoSeleccionadoNombre) return;
+  
+  if (window.confirm('¿Quitar a este especialista del equipo?')) {
+    const token = localStorage.getItem('token');
+    setError('');
+    try {
+      await axios.delete(`${API_BASE_URL}/equipos/miembros/${idEntradaEquipo}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      handleGestionarEspecialistas(equipoSeleccionadoNombre);
+    } catch (err) {
+      const errorMsg = err.response?.data?.msg || 'Error al eliminar especialista.';
+      setError(errorMsg);
+      
+      // Mostrar alerta específica para el error de clave foránea
+      if (errorMsg.includes('cirugías')) {
+        alert(`⚠️ ${errorMsg}\n\nPor favor, reasigne las cirugías asociadas antes de eliminar este miembro.`);
+      }
+    }
+  }
+};
+  
+  const handleEliminarEquipoCompleto = async (e, nombreEquipo) => {
+    e.stopPropagation(); // Evita que se seleccione el equipo al hacer clic en eliminar
+    if (window.confirm(`¿Está seguro de eliminar el equipo "${nombreEquipo}" completo?`)) {
       const token = localStorage.getItem('token');
       setError('');
       try {
-        await axios.delete(`${API_BASE_URL}/equipos/miembros/${idEntradaEquipo}`, {
+        await axios.delete(`${API_BASE_URL}/equipos/${encodeURIComponent(nombreEquipo)}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        handleGestionarEspecialistas(equipoSeleccionadoNombre);
+        setEquipos(equipos.filter(nombre => nombre !== nombreEquipo));
+        alert(`Equipo "${nombreEquipo}" eliminado.`);
       } catch (err) {
-        setError(err.response?.data?.msg || 'Error al eliminar especialista.');
+        setError(err.response?.data?.msg || 'Error al eliminar el equipo.');
       }
     }
-  };
-  
-  const handleEliminarEquipoCompleto = async (e, nombreEquipo) => {
-       e.stopPropagation(); // Evita que se seleccione el equipo al hacer clic en eliminar
-       if (window.confirm(`¿Está seguro de eliminar el equipo "${nombreEquipo}" completo?`)) {
-          const token = localStorage.getItem('token');
-          setError('');
-          try {
-             await axios.delete(`${API_BASE_URL}/equipos/${encodeURIComponent(nombreEquipo)}`, {
-                 headers: { Authorization: `Bearer ${token}` }
-             });
-             setEquipos(equipos.filter(nombre => nombre !== nombreEquipo));
-             alert(`Equipo "${nombreEquipo}" eliminado.`);
-          } catch (err) {
-              setError(err.response?.data?.msg || 'Error al eliminar el equipo.');
-          }
-       }
   };
 
   const handleVolverALista = () => {
@@ -184,7 +220,10 @@ const EquipoMedico = () => {
                 <p className="lista-vacia">No hay especialistas disponibles.</p>
               ) : (
                 especialistasDisponibles.map(especialista => {
-                  const yaEstaEnEquipo = miembrosEquipoActual.some(m => m.id_medicos === especialista.id_medicos);
+                  const yaEstaEnEquipo = miembrosEquipoActual.some(m => 
+                    m.id_medicos === especialista.id_medicos || 
+                    m.id_medico === especialista.id_medicos
+                  );
                   return (
                     <div key={especialista.id_medicos} className="especialista-disponible-card">
                       <div className="info-especialista">
@@ -223,18 +262,20 @@ const EquipoMedico = () => {
             {miembrosEquipoActual.length > 0 ? (
               <div className="lista-mejorada">
                 {miembrosEquipoActual.map((miembro) => (
-                  <div key={miembro.id_equipomedico} className="item-especialista-mejorado">
+                  <div key={miembro.id_equipomedico || miembro.id} className="item-especialista-mejorado">
                     <div className="info-especialista">
                       <div className="avatar-especialista">
-                        {miembro.medico_nombre?.charAt(0) || 'U'}
+                        {(miembro.medico_nombre || miembro.nombre)?.charAt(0) || 'U'}
                       </div>
                       <div className="datos-especialista">
-                        <h4 className="nombre-especialista">{miembro.medico_nombre} {miembro.apellido_paterno}</h4>
+                        <h4 className="nombre-especialista">
+                          {miembro.medico_nombre || miembro.nombre} {miembro.apellido_paterno}
+                        </h4>
                         <p className="especialidad-especialista">{miembro.especialidad}</p>
                       </div>
                     </div>
                     <button 
-                      onClick={() => handleEliminarEspecialista(miembro.id_equipomedico)}
+                      onClick={() => handleEliminarEspecialista(miembro.id_equipomedico || miembro.id)}
                       className="btn-eliminar-especialista"
                       title="Eliminar especialista"
                     >
@@ -312,28 +353,31 @@ const EquipoMedico = () => {
           <div className="lista-pacientes-compacta">
             {loading ? <p>Cargando equipos...</p> : (
               equipos.length === 0 ? <p>No hay equipos registrados.</p> : (
-                equipos.map(nombreEquipo => (
-                  <div 
-                    key={nombreEquipo} 
-                    className="paciente-item-compacto"
-                    onClick={() => handleGestionarEspecialistas(nombreEquipo)}
-                  >
-                    <div className="paciente-info-compacta">
-                      <h4>{nombreEquipo}</h4>
-                      {/* Aquí podrías mostrar cuántos miembros tiene si la API lo devolviera */}
+                equipos.map((equipo, index) => {
+                  const nombreEquipo = typeof equipo === 'object' ? equipo.nombre : equipo;
+                  return (
+                    <div 
+                      key={nombreEquipo || index} 
+                      className="paciente-item-compacto"
+                      onClick={() => handleGestionarEspecialistas(nombreEquipo)}
+                    >
+                      <div className="paciente-info-compacta">
+                        <h4>{nombreEquipo}</h4>
+                        {/* Aquí podrías mostrar cuántos miembros tiene si la API lo devolviera */}
+                      </div>
+                      <div className="acciones-lista-equipo">
+                        <button 
+                          className="btn-eliminar-lista-equipo"
+                          title="Eliminar equipo completo"
+                          onClick={(e) => handleEliminarEquipoCompleto(e, nombreEquipo)}
+                        >
+                          🗑️
+                        </button>
+                        <div className="flecha-derecha">➡️</div>
+                      </div>
                     </div>
-                    <div className="acciones-lista-equipo">
-                       <button 
-                         className="btn-eliminar-lista-equipo"
-                         title="Eliminar equipo completo"
-                         onClick={(e) => handleEliminarEquipoCompleto(e, nombreEquipo)}
-                       >
-                         🗑️
-                       </button>
-                       <div className="flecha-derecha">➡️</div>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )
             )}
           </div>

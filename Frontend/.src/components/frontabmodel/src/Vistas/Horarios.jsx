@@ -5,7 +5,7 @@ import '../styles/Horarios.css';
 
 // Versión SIN roles, Click muestra Detalles, 5 Estados
 const Horarios = () => {
-  const API_BASE_QUIROFANOS = 'http://localhost:4001/api/quirofano';
+  const API_BASE_QUIROFANOS = 'http://localhost:4001/api/quirofanos';
 
   // --- ESTADOS PARA MODALES ---
   const [showEmergenciaModal, setShowEmergenciaModal] = useState(false);

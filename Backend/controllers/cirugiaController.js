@@ -4,26 +4,39 @@ const Cirugia = require('../models/cirugiaModel');
  * Crea una nueva cirugía.
  */
 exports.crearCirugia = async (req, res) => {
-  // Validación básica basada en tu formulario y consulta INSERT
-  const { id_expediente, fecha, diagnostico_pre, procedimiento, id_quirófano, id_equipomedico, estado } = req.body;
+  // CORREGIDO: Usar los nombres REALES de tu tabla
+  const { id_expediente, fecha, diagnostico_pre, procedimiento, id_quirófano, id_equipomedico } = req.body;
 
   if (!id_expediente || !fecha || !procedimiento || !id_quirófano || !id_equipomedico) {
-    return res.status(400).json({ msg: 'Faltan campos obligatorios para registrar la cirugía (expediente, fecha, procedimiento, quirófano, equipo).' });
+    return res.status(400).json({ 
+      msg: 'Faltan campos obligatorios: expediente, fecha, procedimiento, quirófano y equipo médico.' 
+    });
   }
 
   try {
-    // Podrías añadir lógica aquí para verificar disponibilidad de quirófano/equipo si fuera necesario
-
-    // Pasamos el usuario que crea (viene del middleware)
-    const datosCirugia = { ...req.body, creado_por: req.usuario?.id || 'sistema' }; 
-    const nuevaCirugia = await Cirugia.create(datosCirugia);
+    const nuevaCirugia = await Cirugia.create({
+      id_expediente,
+      fecha,
+      diagnostico_pre: diagnostico_pre || '',
+      diagnostico_post: '',
+      procedimiento,
+      resultado: '',
+      id_quirófano,
+      id_equipomedico,
+      estado: 'programada'
+    });
     
-    // Devolvemos la cirugía recién creada
-    res.status(201).json({ msg: 'Cirugía registrada con éxito', cirugia: nuevaCirugia });
+    res.status(201).json({ 
+      msg: 'Cirugía registrada con éxito', 
+      cirugia: nuevaCirugia 
+    });
 
   } catch (error) {
     console.error('Error en el controlador al crear cirugía:', error);
-    res.status(500).json({ msg: 'Error en el servidor al registrar la cirugía.' });
+    res.status(500).json({ 
+      msg: 'Error en el servidor al registrar la cirugía.',
+      error: error.message 
+    });
   }
 };
 
@@ -36,7 +49,10 @@ exports.obtenerTodasLasCirugias = async (req, res) => {
     res.json(cirugias);
   } catch (error) {
     console.error('Error al obtener todas las cirugías:', error);
-    res.status(500).json({ msg: 'Error en el servidor al obtener cirugías.' });
+    res.status(500).json({ 
+      msg: 'Error al obtener las cirugías',
+      error: error.message 
+    });
   }
 };
 
@@ -52,7 +68,10 @@ exports.obtenerCirugiaPorId = async (req, res) => {
         res.json(cirugia);
     } catch (error) {
         console.error(`Error al obtener cirugía ${req.params.id}:`, error);
-        res.status(500).json({ msg: 'Error en el servidor.' });
+        res.status(500).json({ 
+          msg: 'Error en el servidor.',
+          error: error.message 
+        });
     }
 };
 
@@ -65,10 +84,16 @@ exports.actualizarCirugia = async (req, res) => {
     if (!cirugiaActualizada) {
       return res.status(404).json({ msg: 'Cirugía no encontrada para actualizar.' });
     }
-    res.json({ msg: 'Cirugía actualizada con éxito', cirugia: cirugiaActualizada });
+    res.json({ 
+      msg: 'Cirugía actualizada con éxito', 
+      cirugia: cirugiaActualizada 
+    });
   } catch (error) {
     console.error('Error al actualizar cirugía:', error);
-    res.status(500).json({ msg: 'Error en el servidor al actualizar la cirugía.' });
+    res.status(500).json({ 
+      msg: 'Error en el servidor al actualizar la cirugía.',
+      error: error.message 
+    });
   }
 };
 
@@ -84,6 +109,9 @@ exports.eliminarCirugia = async (req, res) => {
     res.json({ msg: 'Cirugía eliminada con éxito' });
   } catch (error) {
     console.error('Error al eliminar cirugía:', error);
-    res.status(500).json({ msg: 'Error en el servidor al eliminar la cirugía.' });
+    res.status(500).json({ 
+      msg: 'Error en el servidor al eliminar la cirugía.',
+      error: error.message 
+    });
   }
 };
