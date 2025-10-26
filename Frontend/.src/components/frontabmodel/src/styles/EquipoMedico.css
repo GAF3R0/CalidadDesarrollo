@@ -1,24 +1,24 @@
 /* ESTILOS GENERALES */
-.pacientes-container {
+.pacientes-container { /* Renombrar esta clase si aplica a Equipo Médico también */
   padding: 20px;
-  background: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   min-height: 100vh;
 }
 
 .pacientes-container h2 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 5px;
   font-size: 24px;
 }
 
 .pacientes-container h3 {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   margin-bottom: 30px;
   font-size: 16px;
   font-weight: normal;
 }
 
-.pacientes-content-layout {
+.pacientes-content-layout { /* Renombrar si aplica a Equipo Médico */
   display: grid;
   grid-template-columns: 350px 1fr;
   gap: 25px;
@@ -26,16 +26,16 @@
 }
 
 /* FORMULARIO IZQUIERDO */
-.form-paciente {
-  background: white;
+.form-paciente { /* Renombrar a .form-equipo-medico o similar */
+  background-color: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .form-paciente h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
@@ -49,28 +49,29 @@
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 13px;
 }
 
 .form-group input, .form-group select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
   font-size: 14px;
-  background: #fafafa;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .form-group input:focus, .form-group select:focus {
   outline: none;
-  border-color: #3498db;
-  background: white;
+  border-color: var(--accent-color); /* Variable */
+  background-color: var(--background-secondary); /* Variable */
 }
 
 .btn-agregar {
-  background: #27ae60;
-  color: white;
+  background-color: var(--accent-color); /* Variable para el color verde/azul de acción principal */
+  color: var(--button-text-color); /* Variable */
   padding: 12px 25px;
   border: none;
   border-radius: 4px;
@@ -79,23 +80,24 @@
   width: 100%;
   font-size: 14px;
   margin-top: 10px;
+  transition: background-color 0.2s ease;
 }
 
 .btn-agregar:hover {
-  background: #229954;
+  background-color: var(--button-hover-bg); /* Variable */
 }
 
 /* LISTA COMPACTA */
-.lista-pacientes-container {
-  background: white;
+.lista-pacientes-container { /* Renombrar a .lista-equipo-container o similar */
+  background-color: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .lista-pacientes-container h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
@@ -107,27 +109,28 @@
   gap: 10px;
 }
 
-.paciente-item-compacto {
-  background: #f8f9fa;
+.paciente-item-compacto { /* Renombrar a .equipo-item-compacto o similar */
+  background-color: var(--background-primary); /* Variable */
   padding: 15px 20px;
   border-radius: 6px;
-  border-left: 4px solid #3498db;
+  /* Mantenemos el borde de acento azul o cambiar a var(--accent-color) */
+  border-left: 4px solid var(--accent-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .paciente-item-compacto:hover {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   transform: translateX(5px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px var(--shadow-color); /* Variable */
 }
 
 .paciente-info-compacta h4 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0 0 5px 0;
   font-size: 16px;
   font-weight: bold;
@@ -135,10 +138,11 @@
 
 .paciente-info-compacta p {
   margin: 4px 0;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
 }
 
+/* Colores de estado específicos (se mantienen) */
 .estado.disponible {
   color: #27ae60;
   font-weight: 600;
@@ -158,14 +162,14 @@
 }
 
 .flecha-derecha {
-  color: #3498db;
+  color: var(--accent-color); /* Variable */
   font-size: 16px;
 }
 
-/* VISTA DETALLES */
+/* VISTA DETALLES (Asumiendo que aplica a Equipo Médico también) */
 .detalles-paciente-container {
   padding: 30px;
-  background: linear-gradient(135deg, rgb(245, 245, 247) 0%, rgb(241, 241, 243) 100%);
+  background-color: var(--background-primary); /* Variable (quitado gradiente) */
   min-height: 100vh;
 }
 
@@ -174,15 +178,16 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
 }
 
 .btn-volver {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
+  /* Mantenemos gradiente o usar var(--accent-color) */
+  background: linear-gradient(135deg, var(--accent-color), #2980b9); /* Usando variable + tono oscuro */
+  color: var(--button-text-color); /* Variable */
   border: none;
   padding: 12px 25px;
   border-radius: 10px;
@@ -197,11 +202,12 @@
 
 .btn-volver:hover {
   transform: translateY(-2px);
+  /* Sombra requiere ajuste manual o una variable --accent-shadow-color */
   box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
 }
 
 .detalles-header h2 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0;
   font-size: 28px;
   font-weight: 700;
@@ -213,16 +219,16 @@
 }
 
 .paciente-card-detalle {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .paciente-header {
   text-align: center;
-  border-bottom: 2px solid #f8f9fa;
+  border-bottom: 2px solid var(--background-primary); /* Variable */
   padding-bottom: 30px;
   margin-bottom: 35px;
 }
@@ -230,29 +236,32 @@
 .paciente-avatar {
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  /* Gradiente o var(--accent-color) */
+  background: linear-gradient(135deg, var(--accent-color), #2980b9);
   border-radius: 50%;
   margin: 0 auto 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  border: 4px solid white;
+  border: 4px solid var(--background-secondary); /* Variable para contraste */
+  /* Sombra requiere ajuste o variable --accent-shadow-color */
   box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+  color: white; /* Asegurar contraste */
 }
 
 .paciente-header h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0 0 10px 0;
   font-size: 32px;
   font-weight: 700;
 }
 
 .paciente-id {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 16px;
   font-weight: 500;
-  background: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
   padding: 6px 15px;
   border-radius: 20px;
   display: inline-block;
@@ -266,22 +275,23 @@
 }
 
 .dato-item {
-  background: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
   padding: 25px;
   border-radius: 12px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid var(--accent-color); /* Variable */
   transition: all 0.3s ease;
 }
 
 .dato-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px var(--shadow-color); /* Variable */
+  background-color: var(--background-secondary); /* Puede cambiar al hacer hover */
 }
 
 .dato-item label {
   display: block;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-secondary); /* Variable */
   margin-bottom: 8px;
   font-size: 14px;
   text-transform: uppercase;
@@ -289,7 +299,7 @@
 }
 
 .dato-item span {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 18px;
   font-weight: 500;
 }
@@ -301,8 +311,8 @@
 }
 
 .especialista-tag-completo {
-  background: #3498db;
-  color: white;
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   padding: 12px 15px;
   border-radius: 8px;
   display: flex;
@@ -327,6 +337,7 @@
   flex-wrap: wrap;
 }
 
+/* Colores botones específicos (especialistas, editar, eliminar) se mantienen */
 .btn-especialistas {
   background: linear-gradient(135deg, #9b59b6, #8e44ad);
   color: white;
@@ -342,7 +353,6 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
 }
-
 .btn-especialistas:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
@@ -363,7 +373,6 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
-
 .btn-editar:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
@@ -384,18 +393,17 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
-
 .btn-eliminar:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
 }
 
 /* FORMULARIO DE EDICIÓN */
-.form-paciente-editar {
-  background: white;
+.form-paciente-editar { /* Renombrar si aplica a Equipo Médico */
+  background-color: var(--background-secondary); /* Variable */
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 40px var(--shadow-color); /* Variable */
 }
 
 .form-paciente-editar .form-group {
@@ -405,7 +413,7 @@
 .form-paciente-editar .form-group label {
   font-size: 14px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 8px;
 }
 
@@ -413,15 +421,18 @@
 .form-paciente-editar .form-group select {
   padding: 12px 15px;
   font-size: 16px;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border-color); /* Variable */
   border-radius: 8px;
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .form-paciente-editar .form-group input:focus,
 .form-paciente-editar .form-group select:focus {
-  border-color: #3498db;
+  border-color: var(--accent-color); /* Variable */
+  /* Ajustar sombra de focus o eliminarla si se prefiere */
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  outline: none;
 }
 
 .form-actions-editar {
@@ -431,6 +442,7 @@
   margin-top: 30px;
 }
 
+/* Colores botones específicos (guardar, cancelar) se mantienen */
 .btn-guardar {
   background: linear-gradient(135deg, #27ae60, #2ecc71);
   color: white;
@@ -442,13 +454,12 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-guardar:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
 }
 
-.btn-cancelar {
+.btn-cancelar { /* CUIDADO: Redefinido, usar clase más específica si es necesario */
   background: linear-gradient(135deg, #95a5a6, #7f8c8d);
   color: white;
   border: none;
@@ -459,7 +470,6 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-cancelar:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
@@ -468,32 +478,34 @@
 /* GESTIÓN MEJORADA DE ESPECIALISTAS */
 .gestion-especialistas-container {
   padding: 20px;
-  background: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   min-height: 100vh;
 }
 
 .gestion-mejorada {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 25px var(--shadow-color); /* Variable */
 }
 
 /* FORMULARIO MEJORADO */
 .form-agregar-mejorado {
+  /* Mantenemos gradiente específico */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 25px;
   border-radius: 12px;
   margin-bottom: 30px;
-  color: white;
+  color: white; /* Mantenemos blanco para contraste */
 }
 
 .form-agregar-mejorado h3 {
   margin: 0 0 20px 0;
   font-size: 18px;
   font-weight: 600;
+  color: white; /* Asegurar contraste */
 }
 
 .campos-especialista {
@@ -512,7 +524,7 @@
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.9); /* Mantenemos blanco semitransparente */
 }
 
 .campo-group input {
@@ -520,16 +532,20 @@
   border: none;
   border-radius: 8px;
   font-size: 14px;
+  /* Fondo blanco semitransparente se mantiene */
   background: rgba(255,255,255,0.95);
   transition: all 0.3s ease;
+  color: var(--text-primary); /* Color de texto del input */
 }
 
 .campo-group input:focus {
   outline: none;
-  background: white;
+  background: white; /* Cambia a blanco opaco en focus */
+  /* Sombra de focus específica se mantiene */
   box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
 }
 
+/* Color botón agregar específico se mantiene */
 .btn-agregar-especialista {
   background: #27ae60;
   color: white;
@@ -542,14 +558,13 @@
   transition: all 0.3s ease;
   white-space: nowrap;
 }
-
 .btn-agregar-especialista:hover:not(:disabled) {
   background: #229954;
   transform: translateY(-2px);
 }
-
 .btn-agregar-especialista:disabled {
-  background: #95a5a6;
+  background: var(--text-secondary); /* Fondo gris usando variable */
+  color: var(--background-secondary); /* Contraste */
   cursor: not-allowed;
   transform: none;
 }
@@ -565,18 +580,18 @@
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #f8f9fa;
+  border-bottom: 2px solid var(--background-primary); /* Variable */
 }
 
 .header-lista-especialistas h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0;
   font-size: 20px;
 }
 
 .contador {
-  background: #3498db;
-  color: white;
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   padding: 6px 12px;
   border-radius: 15px;
   font-size: 12px;
@@ -594,16 +609,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
   border-radius: 10px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color); /* Variable */
   transition: all 0.3s ease;
 }
 
 .item-especialista-mejorado:hover {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px var(--shadow-color); /* Variable */
 }
 
 .info-especialista {
@@ -616,29 +631,31 @@
 .avatar-especialista {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  /* Mantenemos gradiente o usar var(--accent-color) */
+  background: linear-gradient(135deg, var(--accent-color), #2980b9);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: white; /* Mantenemos blanco */
 }
 
 .datos-especialista h4 {
   margin: 0 0 5px 0;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 16px;
   font-weight: 600;
 }
 
 .cedula-especialista {
   margin: 0;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
 }
 
+/* Color botón eliminar específico se mantiene */
 .btn-eliminar-especialista {
   background: #e74c3c;
   color: white;
@@ -653,7 +670,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .btn-eliminar-especialista:hover {
   background: #c0392b;
   transform: scale(1.1);
@@ -663,25 +679,27 @@
 .sin-especialistas-mejorado {
   text-align: center;
   padding: 50px 30px;
-  background: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
   border-radius: 10px;
-  border: 2px dashed #bdc3c7;
+  border: 2px dashed var(--border-color); /* Variable */
 }
 
 .sin-especialistas-mejorado .icono-vacio {
   font-size: 48px;
   margin-bottom: 15px;
   opacity: 0.5;
+  color: var(--text-secondary); /* Variable */
 }
 
 .sin-especialistas-mejorado p {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   margin: 0 0 8px 0;
   font-size: 16px;
 }
 
 .sin-especialistas-mejorado small {
-  color: #95a5a6;
+  color: var(--text-secondary); /* Variable (un poco más claro que p) */
+  opacity: 0.8;
   font-size: 12px;
 }
 
@@ -693,6 +711,7 @@
   margin-top: 30px;
 }
 
+/* Colores botones específicos (guardar, cancelar) se mantienen */
 .btn-guardar-mejorado {
   background: linear-gradient(135deg, #27ae60, #2ecc71);
   color: white;
@@ -704,7 +723,6 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-guardar-mejorado:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
@@ -721,7 +739,6 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-cancelar-mejorado:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);

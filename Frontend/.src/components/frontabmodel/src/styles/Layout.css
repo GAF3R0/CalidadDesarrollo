@@ -1,23 +1,28 @@
-/* Layout.css */
+/* Layout.css - ACTUALIZADO CON VARIABLES CSS */
 .layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: var(--background-primary); /* Variable para el fondo general del layout */
 }
 
 .layout-body {
   display: flex;
   flex: 1;
   overflow: hidden;
+  /* El color de fondo vendrá de los componentes internos (Sidebar, Content) */
 }
 
 .layout-content {
   flex: 1;
   padding: 20px;
-  background-color: #f5f6fa;
+  background-color: var(--background-primary); /* Variable para el fondo del área de contenido */
   overflow-y: auto;
+  color: var(--text-primary); /* Variable para el color de texto del contenido */
+  transition: margin-left 0.3s ease, width 0.3s ease; /* Transición para cuando se expande */
 }
 
+/* Si el sidebar se oculta y el contenido se expande */
 .layout-content.expanded {
   margin-left: 0;
   width: 100%;

@@ -10,4 +10,30 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-primary); /* Variable para fondo */
+  color: var(--text-primary); /* Variable para texto principal */
+  /* Añadimos transición para suavizar el cambio de tema */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  /* El color del código heredará de 'body' o de su contenedor,
+     que ahora usan variables. Si necesitas un color específico para el código,
+     puedes añadir: color: var(--text-secondary); o similar */
+}
+
+/* Opcional: Asegurar que #root ocupe toda la altura */
+#root {
+  min-height: 100vh; /* Usar min-height es a menudo más flexible que height */
+  display: flex; /* Puede ser útil si tu App principal usa flexbox */
+  flex-direction: column; /* Puede ser útil si tu App principal usa flexbox */
 }

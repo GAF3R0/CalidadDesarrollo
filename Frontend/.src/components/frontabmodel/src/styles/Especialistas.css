@@ -1,12 +1,12 @@
 /* ESPECIALISTAS.CSS */
 .especialistas-container {
   padding: 20px;
-  background: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   min-height: 100vh;
 }
 
 .especialistas-container h2 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 30px;
   font-size: 24px;
 }
@@ -20,15 +20,15 @@
 
 /* FORMULARIO IZQUIERDO */
 .form-especialista {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .form-especialista h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
@@ -42,23 +42,24 @@
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 13px;
 }
 
 .form-group input, .form-group select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
   font-size: 14px;
-  background: #fafafa;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .form-group input:focus, .form-group select:focus {
   outline: none;
-  border-color: #3498db;
-  background: white;
+  border-color: var(--accent-color); /* Variable */
+  background-color: var(--background-secondary); /* Variable */
 }
 
 /* COMBOBOX CON BOTÓN */
@@ -70,7 +71,7 @@
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 13px;
 }
 
@@ -83,15 +84,16 @@
 .combobox-container select {
   flex: 1;
   padding: 10px 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
   font-size: 14px;
-  background: #fafafa;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .btn-agregar-opcion {
-  background: #3498db;
-  color: white;
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   border: none;
   width: 35px;
   height: 35px;
@@ -106,7 +108,7 @@
 }
 
 .btn-agregar-opcion:hover {
-  background: #2980b9;
+  background-color: var(--button-hover-bg); /* Variable */
   transform: scale(1.1);
 }
 
@@ -117,7 +119,7 @@
   margin-top: 20px;
 }
 
-.btn-agregar {
+.btn-agregar { /* Mantenemos verde específico o usar var(--accent-color) */
   background: #27ae60;
   color: white;
   padding: 12px 25px;
@@ -127,34 +129,36 @@
   font-weight: bold;
   flex: 1;
   font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
 .btn-agregar:hover {
   background: #229954;
 }
 
-.btn-cancelar {
-  background: #95a5a6;
-  color: white;
+.btn-cancelar { /* Usamos variables para gris */
+  background-color: var(--text-secondary);
+  color: var(--background-secondary); /* Contraste */
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
+  transition: background-color 0.2s ease;
 }
 
 .btn-cancelar:hover {
-  background: #7f8c8d;
+  background-color: var(--text-primary); /* Más oscuro */
 }
 
 /* LISTADO DERECHO */
 .lista-especialistas-container {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .header-lista {
@@ -165,15 +169,15 @@
 }
 
 .header-lista h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0;
   font-size: 18px;
   font-weight: bold;
 }
 
 .contador-especialistas {
-  background: #3498db;
-  color: white;
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   padding: 6px 12px;
   border-radius: 15px;
   font-size: 12px;
@@ -188,18 +192,18 @@
 }
 
 .especialista-card {
-  background: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
   padding: 20px;
   border-radius: 8px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid var(--accent-color); /* Variable */
   transition: all 0.3s ease;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .especialista-card:hover {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px var(--shadow-color); /* Variable */
 }
 
 .especialista-header {
@@ -212,19 +216,20 @@
 .especialista-avatar {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  /* Mantenemos gradiente o usar var(--accent-color) */
+  background: linear-gradient(135deg, var(--accent-color), #2980b9);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: white; /* Mantenemos blanco */
   flex-shrink: 0;
 }
 
 .especialista-info h4 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0 0 8px 0;
   font-size: 16px;
   font-weight: bold;
@@ -232,13 +237,13 @@
 
 .especialista-datos {
   margin: 0;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
   line-height: 1.4;
 }
 
 .especialista-datos strong {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
 }
 
 .card-actions {
@@ -247,6 +252,7 @@
   justify-content: flex-end;
 }
 
+/* Colores botones editar/eliminar específicos se mantienen */
 .btn-editar {
   background: #f39c12;
   color: white;
@@ -257,10 +263,7 @@
   font-size: 12px;
   transition: all 0.3s ease;
 }
-
-.btn-editar:hover {
-  background: #e67e22;
-}
+.btn-editar:hover { background: #e67e22; }
 
 .btn-eliminar {
   background: #e74c3c;
@@ -272,16 +275,13 @@
   font-size: 12px;
   transition: all 0.3s ease;
 }
-
-.btn-eliminar:hover {
-  background: #c0392b;
-}
+.btn-eliminar:hover { background: #c0392b; }
 
 /* ESTADO VACÍO */
 .lista-vacia {
   text-align: center;
   padding: 40px 20px;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
 }
 
 .lista-vacia p {
@@ -290,12 +290,9 @@
 }
 
 /* MODALES */
-.modal-overlay {
+.modal-overlay { /* Estilo general ya definido, asegurar que no haya conflicto si se importa globalmente */
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
@@ -304,16 +301,16 @@
 }
 
 .modal-especialidad {
-  background: white;
+  background-color: var(--background-secondary); /* Variable */
   border-radius: 12px;
   width: 90%;
   max-width: 450px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
 }
 
-.modal-header {
+.modal-header { /* Gradiente específico para modal de especialidad, se mantiene */
   background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  color: white; /* Mantenemos blanco */
   padding: 20px;
   border-radius: 12px 12px 0 0;
   display: flex;
@@ -324,12 +321,13 @@
 .modal-header h3 {
   margin: 0;
   font-size: 18px;
+  color: white; /* Asegurar contraste */
 }
 
-.close-button {
+.close-button { /* Mismo estilo que otros modales */
   background: none;
   border: none;
-  color: white;
+  color: white; /* Mantenemos blanco */
   font-size: 24px;
   cursor: pointer;
   padding: 0;
@@ -338,23 +336,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 }
+.close-button:hover { opacity: 1; }
 
 .modal-content {
   padding: 25px;
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 0 0 12px 12px; /* Redondear esquinas inferiores */
 }
 
-.modal-actions {
+.modal-actions { /* Estilos generales ya definidos? Si no, copiar de Cirugias.css y adaptar colores */
   display: flex;
   gap: 10px;
   margin-top: 20px;
+  /* Asegúrate de que tenga padding, border-top y background-color con variables si es necesario */
 }
 
-/* Estilos para validaciones */
+/* Estilos para validaciones (colores de error se mantienen específicos) */
 .input-error {
   border: 2px solid #ff4444 !important;
-  background-color: #fff8f8;
+  background-color: #fff8f8; /* Un fondo rojo muy claro */
+  color: #c62828; /* Texto oscuro para contraste */
 }
+.input-error::placeholder { color: #ff8888; } /* Placeholder rojo claro */
 
 .error-text {
   color: #ff4444;
@@ -364,30 +370,26 @@
 }
 
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: #ffebee; /* Fondo rojo claro */
+  color: #c62828; /* Texto rojo oscuro */
   padding: 12px;
   border-radius: 4px;
   margin-bottom: 16px;
-  border: 1px solid #ffcdd2;
+  border: 1px solid #ffcdd2; /* Borde rojo más claro */
   display: flex;
-  justify-content: between;
+  justify-content: space-between;
   align-items: center;
 }
 
 .btn-cerrar-error {
   background: none;
   border: none;
-  color: #c62828;
+  color: #c62828; /* Rojo oscuro */
   font-size: 18px;
   cursor: pointer;
   margin-left: auto;
 }
 
-/* Placeholder con color para inputs con error */
-.input-error::placeholder {
-  color: #ff8888;
-}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -395,11 +397,12 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .combobox-container {
     flex-direction: column;
+    align-items: stretch; /* Estirar elementos */
   }
-  
+
   .btn-agregar-opcion {
     width: 100%;
     height: 40px;

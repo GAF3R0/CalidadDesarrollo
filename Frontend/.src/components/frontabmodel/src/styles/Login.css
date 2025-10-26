@@ -1,25 +1,28 @@
+/* Login.css - ACTUALIZADO CON VARIABLES CSS */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   font-family: Arial, sans-serif;
 }
 
 .login-box {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow-color); /* Variable */
   text-align: center;
   width: 360px;
+  border: 1px solid var(--border-color); /* Variable - borde sutil */
 }
 
+/* --- Logo --- */
 .logo-container {
   width: 60px;
   height: 60px;
-  background-color: #c82333; /* Un rojo similar al de la cruz */
+  background-color: #c82333; /* Mantenemos rojo específico del logo */
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -28,21 +31,22 @@
 }
 
 .logo-icon {
-  color: white;
+  color: white; /* Mantenemos blanco para contraste con rojo */
   font-size: 36px;
   font-weight: bold;
 }
+/* --- Fin Logo --- */
 
 .title {
   margin: 0;
   font-size: 28px;
-  color: #333;
+  color: var(--text-primary); /* Variable */
 }
 
 .subtitle {
   margin: 0 0 30px 0;
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary); /* Variable */
   letter-spacing: 1px;
 }
 
@@ -54,25 +58,34 @@
 .login-form label {
   display: block;
   margin-bottom: 5px;
-  color: #555;
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
 }
 
 .login-form input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
-  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  box-sizing: border-box;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
+
+.login-form input:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Variable */
+  background-color: var(--background-secondary); /* Variable */
+}
+
 
 .login-button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff; /* El azul principal de tu diseño */
-  color: white;
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -80,14 +93,24 @@
 }
 
 .login-button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover-bg); /* Variable */
 }
 
+/* --- Error Alert (Mantenemos colores de error) --- */
 .error-alert{
-    color: red;
-    background-color: #ffe6e6 ; 
-    padding: 10px;
-    border: 1px solid red;
-    border-radius: 5px; 
-    margin: 10px 0;
+  color: #c62828; /* Rojo oscuro para texto */
+  background-color: #ffebee; /* Rojo muy pálido para fondo */
+  padding: 10px;
+  border: 1px solid #ffcdd2; /* Borde rojo pálido */
+  border-radius: 5px;
+  margin: 10px 0;
+  text-align: left; /* Alinear texto a la izquierda */
 }
+
+/* Ajustes para modo oscuro en errores (Opcional, pero recomendado) */
+:root[data-theme="dark"] .error-alert {
+  color: #ffcdd2; /* Texto rojo pálido */
+  background-color: rgba(239, 83, 80, 0.2); /* Fondo rojo oscuro semi-transparente */
+  border-color: rgba(239, 83, 80, 0.5); /* Borde rojo oscuro semi-transparente */
+}
+/* --- Fin Error Alert --- */

@@ -1,18 +1,21 @@
-/* Pacientes.css */
+/* Pacientes.css - ACTUALIZADO CON VARIABLES CSS */
+
+/* ESTILOS GENERALES */
 .pacientes-container {
   padding: 20px;
-  background: #f0f2f5;
+  background: var(--background-primary); /* Variable */
   min-height: 100vh;
+  color: var(--text-primary); /* Variable */
 }
 
 .pacientes-container h2 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 5px;
   font-size: 24px;
 }
 
 .pacientes-container h3 {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   margin-bottom: 30px;
   font-size: 16px;
   font-weight: normal;
@@ -27,15 +30,15 @@
 
 /* FORMULARIO IZQUIERDO */
 .form-paciente {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .form-paciente h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
@@ -49,28 +52,29 @@
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 13px;
 }
 
 .form-group input, .form-group select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
   font-size: 14px;
-  background: #fafafa;
+  background: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .form-group input:focus, .form-group select:focus {
   outline: none;
-  border-color: #3498db;
-  background: white;
+  border-color: var(--accent-color); /* Variable */
+  background: var(--background-secondary); /* Variable */
 }
 
 .btn-agregar {
-  background: #27ae60;
-  color: white;
+  background: #27ae60; /* Mantenemos verde específico para agregar */
+  color: white; /* Mantenemos blanco para contraste */
   padding: 12px 25px;
   border: none;
   border-radius: 4px;
@@ -82,20 +86,20 @@
 }
 
 .btn-agregar:hover {
-  background: #229954;
+  background: #229954; /* Verde más oscuro */
 }
 
 /* LISTA COMPACTA */
 .lista-pacientes-container {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .lista-pacientes-container h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
@@ -108,62 +112,68 @@
 }
 
 .paciente-item-compacto {
-  background: #f8f9fa;
+  background: var(--background-primary); /* Variable */
   padding: 15px 20px;
   border-radius: 6px;
-  border-left: 4px solid #e74c3c;
+  border-left: 4px solid #e74c3c; /* Mantenemos rojo específico */
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .paciente-item-compacto:hover {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   transform: translateX(5px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px var(--shadow-color); /* Variable */
 }
 
 .paciente-info-compacta h4 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0 0 5px 0;
   font-size: 16px;
   font-weight: bold;
 }
 
 .paciente-id {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 12px;
 }
 
 .flecha-derecha {
-  color: #3498db;
+  color: var(--accent-color); /* Variable */
   font-size: 16px;
 }
 
 /* VISTA DETALLES - DISEÑO BONITO */
 .detalles-paciente-container {
   padding: 30px;
-  background: linear-gradient(135deg, #0a28adff 0%, #0f42daff 100%);
+  /* Mantenemos gradiente específico */
+  background: linear-gradient(135deg, rgb(245, 245, 247) 0%, rgb(241, 241, 243) 100%);
   min-height: 100vh;
 }
+/* Estilos para modo oscuro en el fondo de detalles */
+:root[data-theme="dark"] .detalles-paciente-container {
+    background: linear-gradient(135deg, var(--background-primary) 0%, #2c3e50 100%); /* Ajustar gradiente oscuro */
+}
+
 
 .detalles-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
 }
 
 .btn-volver {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-color), #2980b9); /* Usar accent como base */
+  color: var(--button-text-color); /* Variable */
   border: none;
   padding: 12px 25px;
   border-radius: 10px;
@@ -178,11 +188,11 @@
 
 .btn-volver:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+  box-shadow: 0 5px 15px var(--shadow-color); /* Usar shadow variable */
 }
 
 .detalles-header h2 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0;
   font-size: 28px;
   font-weight: 700;
@@ -194,16 +204,16 @@
 }
 
 .paciente-card-detalle {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 15px 40px var(--shadow-color); /* Variable */
+  border: 1px solid var(--border-color); /* Variable */
 }
 
 .paciente-header {
   text-align: center;
-  border-bottom: 2px solid #f8f9fa;
+  border-bottom: 2px solid var(--background-primary); /* Variable */
   padding-bottom: 30px;
   margin-bottom: 35px;
 }
@@ -211,6 +221,7 @@
 .paciente-avatar {
   width: 100px;
   height: 100px;
+  /* Mantenemos gradiente específico */
   background: linear-gradient(135deg, #0a27a7ff, #190ccdff);
   border-radius: 50%;
   margin: 0 auto 20px auto;
@@ -218,24 +229,24 @@
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  color: white;
+  color: white; /* Mantenemos blanco */
   font-weight: bold;
-  border: 4px solid white;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  border: 4px solid var(--background-secondary); /* Variable */
+  box-shadow: 0 8px 25px var(--shadow-color); /* Variable */
 }
 
 .paciente-header h3 {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin: 0 0 10px 0;
   font-size: 32px;
   font-weight: 700;
 }
 
 .paciente-id {
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 16px;
   font-weight: 500;
-  background: #f8f9fa;
+  background: var(--background-primary); /* Variable */
   padding: 6px 15px;
   border-radius: 20px;
   display: inline-block;
@@ -249,22 +260,22 @@
 }
 
 .dato-item {
-  background: #f8f9fa;
+  background: var(--background-primary); /* Variable */
   padding: 25px;
   border-radius: 12px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid var(--accent-color); /* Variable */
   transition: all 0.3s ease;
 }
 
 .dato-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px var(--shadow-color); /* Variable */
 }
 
 .dato-item label {
   display: block;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-secondary); /* Variable */
   margin-bottom: 8px;
   font-size: 14px;
   text-transform: uppercase;
@@ -272,11 +283,12 @@
 }
 
 .dato-item span {
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 18px;
   font-weight: 500;
 }
 
+/* Mantenemos colores de estado específicos */
 .estado-activo {
   color: #27ae60 !important;
   font-weight: 700;
@@ -286,6 +298,13 @@
   font-size: 14px;
 }
 
+/* Añadir estilo para modo oscuro si es necesario para estado-activo */
+:root[data-theme="dark"] .estado-activo {
+    background: rgba(39, 174, 96, 0.2); /* Fondo ligeramente más visible */
+    color: #2ecc71 !important; /* Verde más brillante */
+}
+
+
 .detalles-actions {
   display: flex;
   gap: 20px;
@@ -293,6 +312,7 @@
   flex-wrap: wrap;
 }
 
+/* Mantenemos gradientes y colores específicos para botones de acción */
 .btn-editar {
   background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
@@ -308,7 +328,6 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
-
 .btn-editar:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
@@ -329,7 +348,6 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
-
 .btn-eliminar:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
@@ -337,10 +355,10 @@
 
 /* FORMULARIO DE EDICIÓN */
 .form-paciente-editar {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 40px var(--shadow-color); /* Variable */
 }
 
 .form-paciente-editar .form-group {
@@ -350,7 +368,7 @@
 .form-paciente-editar .form-group label {
   font-size: 14px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-bottom: 8px;
 }
 
@@ -358,16 +376,24 @@
 .form-paciente-editar .form-group select {
   padding: 12px 15px;
   font-size: 16px;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border-color); /* Variable */
   border-radius: 8px;
-  background: white;
+  background: var(--background-secondary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .form-paciente-editar .form-group input:focus,
 .form-paciente-editar .form-group select:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: var(--accent-color); /* Variable */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); /* Podríamos hacer la sombra variable también */
+  background: var(--background-secondary); /* Variable */
 }
+/* Sombra de focus en modo oscuro */
+:root[data-theme="dark"] .form-paciente-editar .form-group input:focus,
+:root[data-theme="dark"] .form-paciente-editar .form-group select:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3); /* Azul claro para sombra oscura */
+}
+
 
 .form-actions-editar {
   display: flex;
@@ -376,6 +402,7 @@
   margin-top: 30px;
 }
 
+/* Mantenemos gradientes y colores específicos para botones Guardar/Cancelar */
 .btn-guardar {
   background: linear-gradient(135deg, #27ae60, #2ecc71);
   color: white;
@@ -387,7 +414,6 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-guardar:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
@@ -404,14 +430,13 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-
 .btn-cancelar:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
 }
 
 /* Botones de Exportación */
-.header-lista {
+.header-lista { /* Asegurarse que esté definido una sola vez */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -419,8 +444,8 @@
 }
 
 .btn-exportar {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-color), #2980b9); /* Usar accent */
+  color: var(--button-text-color); /* Variable */
   border: none;
   padding: 10px 20px;
   border-radius: 6px;
@@ -432,14 +457,16 @@
 
 .btn-exportar:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 12px var(--shadow-color); /* Variable */
 }
 
 .btn-exportar:disabled {
-  background: #bdc3c7;
+  background: var(--text-secondary); /* Variable para deshabilitado */
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
+/* Mantenemos gradiente específico */
 .btn-exportar-individual {
   background: linear-gradient(135deg, #9b59b6, #8e44ad);
   color: white;
@@ -455,25 +482,22 @@
   gap: 10px;
   box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
 }
-
 .btn-exportar-individual:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
 }
 
-/* Estilos para validaciones */
+/* Estilos para validaciones (manteniendo colores de error) */
 .input-error {
   border: 2px solid #ff4444 !important;
-  background-color: #fff8f8;
+  background-color: #fff8f8; /* Muy claro para modo claro */
 }
-
 .error-text {
   color: #ff4444;
   font-size: 12px;
   margin-top: 4px;
   display: block;
 }
-
 .error-message {
   background-color: #ffebee;
   color: #c62828;
@@ -482,38 +506,66 @@
   margin-bottom: 16px;
   border: 1px solid #ffcdd2;
   display: flex;
-  justify-content: between;
+  justify-content: space-between; /* Corregido */
   align-items: center;
 }
-
-/* Placeholder con color para inputs con error */
+.btn-cerrar-error {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: auto;
+}
 .input-error::placeholder {
   color: #ff8888;
 }
-
-/* Mejora visual para los formularios */
-.form-group {
-  margin-bottom: 15px;
+/* Ajustes para modo oscuro en validaciones */
+:root[data-theme="dark"] .input-error {
+    background-color: rgba(255, 68, 68, 0.1); /* Fondo rojo oscuro semi-transparente */
+    border-color: #ff6666 !important; /* Borde rojo más brillante */
+}
+:root[data-theme="dark"] .error-text {
+    color: #ff8888; /* Rojo más claro */
+}
+:root[data-theme="dark"] .error-message {
+    background-color: rgba(239, 83, 80, 0.2);
+    color: #ffcdd2;
+    border-color: rgba(239, 83, 80, 0.5);
+}
+:root[data-theme="dark"] .btn-cerrar-error {
+    color: #ffcdd2;
+}
+:root[data-theme="dark"] .input-error::placeholder {
+    color: #ffaaaa;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #007bff;
-}
+/* Mejora visual para los formularios (revisar duplicados) */
+/* Estas reglas parecen duplicar las anteriores .form-group, .form-group label, etc. */
+/* Asegúrate de unificar o eliminar las reglas duplicadas */
+/* Por ejemplo, estas reglas podrían eliminarse si las de arriba ya cubren estos casos */
+/* .form-group { */
+/* margin-bottom: 15px; */
+/* } */
+/* .form-group label { */
+/* display: block; */
+/* margin-bottom: 5px; */
+/* font-weight: bold; */
+/* color: var(--text-primary); /* Variable */
+/* } */
+/* .form-group input, */
+/* .form-group select { */
+/* width: 100%; */
+/* padding: 8px 12px; */
+/* border: 1px solid var(--border-color); /* Variable */
+/* border-radius: 4px; */
+/* font-size: 14px; */
+/* background-color: var(--background-primary); /* Variable */
+/* color: var(--text-primary); /* Variable */
+/* } */
+/* .form-group input:focus, */
+/* .form-group select:focus { */
+/* outline: none; */
+/* border-color: var(--accent-color); /* Variable */
+/* background-color: var(--background-secondary); /* Variable */
+/* } */

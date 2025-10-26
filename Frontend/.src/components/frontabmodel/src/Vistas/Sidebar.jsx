@@ -126,18 +126,18 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
       <nav className="sidebar-nav">
         {isAdmin && (
           <>
+            <NavLink to="/horarios" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Horarios</NavLink>
             <NavLink to="/pacientes" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Pacientes</NavLink>
             <NavLink to="/especialistas" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Especialistas</NavLink>
             <NavLink to="/equipo-medico" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Equipo Médico</NavLink>
-            <NavLink to="/horarios" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Horarios</NavLink>
             <NavLink to="/cirugias" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cirugías</NavLink>
           </>
         )}
         {isEspecialista && (
           <>
+            <NavLink to="/horarios" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Mis Horarios</NavLink>
             <NavLink to="/pacientes" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Pacientes</NavLink>
             <NavLink to="/equipo-medico" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Equipo Médico</NavLink>
-            <NavLink to="/horarios" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Mis Horarios</NavLink>
           </>
         )}
       </nav>

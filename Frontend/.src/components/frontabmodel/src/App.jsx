@@ -65,7 +65,7 @@ function App() {
               />
             }
           >
-            <Route index element={<Pacientes />} />
+            <Route index element={<Horarios />} />
             <Route path="pacientes" element={<Pacientes />} />
             <Route path="especialistas" element={<Especialistas />} />
             <Route path="equipo-medico" element={<EquipoMedico />} />

@@ -1,11 +1,15 @@
+/* Header.css - ACTUALIZADO CON VARIABLES CSS */
+
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
   height: 64px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--header-bg); /* Variable */
+  color: var(--text-primary); /* Variable para el texto principal del header */
+  border-bottom: 1px solid var(--border-color); /* Variable para el borde inferior */
+  box-shadow: 0 2px 5px var(--shadow-color); /* Variable para la sombra */
 }
 
 .header-left, .header-right, .header-nav {
@@ -16,73 +20,38 @@
 
 .app-title {
   font-size: 1.5rem;
+  color: var(--text-primary); /* Asegura que el título use la variable */
+  font-weight: 600; /* Puedes ajustar el peso */
 }
 
+/* Estilos de Navegación (si los usas en el header) */
 .nav-button {
-  color: white;
+  color: var(--text-secondary); /* Variable para texto de navegación */
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 5px;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--background-primary); /* Variable para hover */
+  color: var(--text-primary); /* Variable para texto en hover */
 }
 
-/* 4. Estilo que se aplica automáticamente al enlace de la página activa */
+/* Estilo que se aplica automáticamente al enlace de la página activa */
 .nav-button.active {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
   font-weight: 700;
 }
 
+/* Contenedor Derecho */
 .header-right {
   gap: 20px;
 }
 
-.user-name {
-  font-weight: 500;
-}
-
-.logout-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Header.css - SOLO AGREGAR AL FINAL */
-.header-user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-
-.user-name-header {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.user-role-header, .user-specialty-header {
-  font-size: 12px;
-  opacity: 0.9;
-}
-
-/* Header.css */
-
-/* ... (tus estilos existentes para .app-header, .header-left, etc.) ... */
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px; /* Espacio entre info de usuario y botón */
-}
-
+/* Info de Usuario */
 .header-user-info {
   display: flex;
   flex-direction: column; /* Apila nombre, rol, especialidad */
@@ -94,39 +63,43 @@
 .user-name-header {
   font-weight: bold;
   font-size: 15px;
-  color: white;
+  color: var(--text-primary); /* Variable */
 }
 
 .user-role-header,
 .user-specialty-header {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.8); /* Blanco semi-transparente */
+  color: var(--text-secondary); /* Variable */
 }
 
-/* --- ESTILOS PARA EL NUEVO BOTÓN EN EL HEADER --- */
+/* Botón Cerrar Sesión (Mantenemos rojo, pero texto usa variable) */
 .logout-button-header {
-  background-color: #dc3545; /* Rojo */
-  color: white;
+  background-color: #dc3545; /* Rojo específico mantenido */
+  color: white; /* Blanco específico mantenido para contraste con rojo */
   border: none;
-  padding: 8px 15px; /* Ajusta el padding si es necesario */
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: 500; /* Puedes hacerlo bold si prefieres */
-  font-size: 13px; /* Tamaño de fuente */
+  font-weight: 500;
+  font-size: 13px;
   transition: background-color 0.2s ease;
-  white-space: nowrap; /* Evita que el texto se parta */
+  white-space: nowrap;
 }
 
 .logout-button-header:hover {
-  background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+  background-color: #c82333; /* Rojo más oscuro específico mantenido */
 }
-/* --- FIN ESTILOS BOTÓN --- */
 
-/* ... (otros estilos si los tienes) ... */
+/* Botón de Tema (Estilos definidos en theme.css, pero puedes añadir overrides aquí si es necesario) */
+.theme-toggle-button-header {
+  /* Puedes añadir estilos específicos aquí si los de theme.css no son suficientes */
+  /* Ejemplo: margin-left: 10px; */
+}
+
 
 /* --- ESTILO PARA MENSAJE DE BIENVENIDA --- */
 .welcome-message-header {
-  color: rgba(255, 255, 255, 0.9); /* Blanco un poco tenue */
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
   font-weight: 500;
   /* Podrías añadir un margin-right si quieres más separación */

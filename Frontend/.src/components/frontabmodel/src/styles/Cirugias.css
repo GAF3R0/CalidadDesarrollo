@@ -1,8 +1,8 @@
-/* Cirugias.css - COMPLETO con modal detalles MEJORADO */
+/* Cirugias.css - COMPLETO con modal detalles MEJORADO y variables de tema */
 
 .cirugias-container {
   padding: 20px;
-  background: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   min-height: 100vh;
 }
 
@@ -15,14 +15,15 @@
 }
 
 .cirugias-container h2 {
-  color: #2c3e50;
-  margin: 0; /* Quitado margen inferior original */
+  color: var(--text-primary); /* Variable */
+  margin: 0;
   font-size: 24px;
 }
 
 .btn-add-cirugia {
+  /* Mantenemos gradiente específico, pero podrías usar --accent-color si prefieres un color sólido */
   background: linear-gradient(135deg, #27ae60, #2ecc71);
-  color: white;
+  color: var(--button-text-color); /* Variable para texto en botones */
   border: none;
   padding: 12px 25px;
   border-radius: 25px;
@@ -31,9 +32,11 @@
   font-size: 15px;
   transition: all 0.3s ease;
   white-space: nowrap;
+  box-shadow: 0 2px 5px var(--shadow-color); /* Variable sombra */
 }
 .btn-add-cirugia:hover {
   transform: translateY(-2px);
+  /* Mantenemos sombra específica en hover o podrías ajustarla con variable */
   box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
 }
 
@@ -46,64 +49,65 @@
 .no-cirugias-message {
   text-align: center;
   padding: 50px 20px;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   font-size: 18px;
   font-style: italic;
-  background-color: #fff;
+  background-color: var(--background-secondary); /* Variable */
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px var(--shadow-color); /* Variable */
 }
 
 /* Lista de tarjetas */
 .cirugias-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Columnas responsivas */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
 }
 
 /* Tarjeta individual */
 .cirugia-card {
-  background: white;
-  padding: 20px 25px; /* Ajusta padding */
+  background: var(--background-secondary); /* Variable */
+  padding: 20px 25px;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08); /* Sombra ligeramente más suave */
-  border-left: 5px solid #3498db; /* Borde más grueso */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Transiciones suaves */
-  cursor: pointer; /* Indica que es clickeable */
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  /* Borde izquierdo mantiene color de estado */
+  border-left: 5px solid #3498db; /* Default, se sobreescribe por clase */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .cirugia-card:hover {
-    transform: translateY(-4px); /* Efecto levantar */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px var(--shadow-color); /* Variable con un ligero ajuste en opacidad si es necesario, o definir una --shadow-hover-color */
 }
 
-/* Colores de borde según estado */
+/* Colores de borde según estado (SE MANTIENEN COLORES ESPECÍFICOS) */
 .cirugia-card.completada { border-left-color: #6c757d; }
 .cirugia-card.programada { border-left-color: #3498db; }
 .cirugia-card.baja { border-left-color: #27ae60;}
 .cirugia-card.medio { border-left-color: #f39c12;}
 .cirugia-card.emergencia { border-left-color: #e74c3c;}
-.cirugia-card.cancelada { border-left-color: #95a5a6; } /* Ejemplo */
-.cirugia-card.en-proceso { border-left-color: #3498db; } /* Ejemplo */
+.cirugia-card.cancelada { border-left-color: #95a5a6; }
+.cirugia-card.en-proceso { border-left-color: #3498db; }
 
 
 .cirugia-card h3 { /* Nombre paciente */
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   margin-top: 0;
   margin-bottom: 15px;
-  font-size: 18px; /* Ligeramente más grande */
+  font-size: 18px;
   font-weight: 600;
 }
 
 .cirugia-card p {
-  margin: 6px 0; /* Espacio vertical */
-  color: #555; /* Gris más oscuro */
+  margin: 6px 0;
+  color: var(--text-secondary); /* Variable */
   font-size: 14px;
   line-height: 1.5;
 }
 
 .cirugia-card p strong {
-    color: #333; /* Color más oscuro para etiquetas */
+    color: var(--text-primary); /* Variable */
     margin-right: 5px;
 }
 
@@ -114,10 +118,10 @@
     border-radius: 15px;
     font-size: 12px;
     font-weight: 600;
-    color: white; /* Texto blanco siempre */
-    margin-top: 10px; /* Espacio arriba */
+    color: white; /* Mantenemos blanco para contraste con fondos de color */
+    margin-top: 10px;
 }
-/* Colores de fondo para el badge */
+/* Colores de fondo para el badge (SE MANTIENEN COLORES ESPECÍFICOS) */
 .cirugia-card p.estado.programada { background-color: #3498db; }
 .cirugia-card p.estado.completada { background-color: #6c757d; }
 .cirugia-card p.estado.baja { background-color: #27ae60;}
@@ -130,25 +134,27 @@
 /* --- ESTILOS GENERALES MODAL --- */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.7); display: flex;
+  background: rgba(0, 0, 0, 0.7); /* Mantenemos overlay oscuro */
+  display: flex;
   justify-content: center; align-items: center; z-index: 1000;
-  padding: 20px; /* Espacio por si el modal es muy alto */
+  padding: 20px;
 }
 
-.modal-container { /* Estilo base para todos los modales de Cirugías */
-  background: white;
+.modal-container {
+  background: var(--background-secondary); /* Variable */
   border-radius: 15px;
   width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Clave para border-radius */
-  max-height: calc(100vh - 40px); /* Limita altura máxima con padding */
+  overflow: hidden;
+  max-height: calc(100vh - 40px);
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #3498db, #2980b9); /* Azul por defecto */
-  color: white;
+  /* Mantenemos gradiente específico o usar --accent-color */
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white; /* Mantenemos blanco para contraste */
   padding: 15px 25px;
   border-radius: 15px 15px 0 0;
   display: flex;
@@ -158,7 +164,7 @@
 }
 .modal-header h3 { margin: 0; font-size: 18px; font-weight: 600;}
 .close-button {
-  background: none; border: none; color: white; opacity: 0.8;
+  background: none; border: none; color: white; opacity: 0.8; /* Mantenemos blanco */
   font-size: 26px; cursor: pointer; width: 30px; height: 30px;
   display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;
 }
@@ -168,35 +174,55 @@
   padding: 25px;
   overflow-y: auto;
   flex-grow: 1;
+  background-color: var(--background-secondary); /* Fondo del formulario */
 }
 .modal-form .form-group { margin-bottom: 15px; }
-.modal-form label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; font-size: 13px; }
+.modal-form label {
+  display: block; margin-bottom: 5px; font-weight: 600;
+  color: var(--text-primary); /* Variable */
+  font-size: 13px;
+}
 .modal-form input[type="text"],
 .modal-form input[type="date"],
 .modal-form input[type="number"],
 .modal-form select,
 .modal-form textarea {
-  width: 100%; padding: 10px 12px; border: 1px solid #ccc;
-  border-radius: 4px; font-size: 14px; background-color: #f9f9f9;
+  width: 100%; padding: 10px 12px;
+  border: 1px solid var(--border-color); /* Variable */
+  border-radius: 4px; font-size: 14px;
+  background-color: var(--background-primary); /* Variable (un fondo ligeramente distinto) */
+  color: var(--text-primary); /* Variable */
 }
 .modal-form input:focus,
 .modal-form select:focus,
-.modal-form textarea:focus { outline: none; border-color: #007bff; background-color: #fff; }
+.modal-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Variable */
+  background-color: var(--background-secondary); /* Variable */
+}
 .modal-form textarea { resize: vertical; min-height: 60px; }
 
 .modal-actions {
   display: flex; gap: 10px; justify-content: flex-end;
-  padding: 15px 25px; border-top: 1px solid #e9ecef;
-  background-color: #f8f9fa; flex-shrink: 0;
+  padding: 15px 25px;
+  border-top: 1px solid var(--border-color); /* Variable */
+  background-color: var(--background-primary); /* Variable */
+  flex-shrink: 0;
   border-radius: 0 0 15px 15px;
 }
+/* Colores de botones modales podrían ser variables o específicos */
 .btn-cancelar-modal {
-  background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px;
+  /* Usaremos text-secondary para el fondo gris */
+  background: var(--text-secondary);
+  color: var(--background-secondary); /* Texto claro en fondo oscuro, oscuro en fondo claro */
+  border: none; padding: 10px 20px; border-radius: 5px;
   cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s;
 }
-.btn-cancelar-modal:hover { background: #5a6268; }
+.btn-cancelar-modal:hover { background: var(--text-primary); } /* Más oscuro al hacer hover */
+
 .btn-guardar-modal {
-  background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px;
+  background: #28a745; /* Mantenemos verde específico para guardar */
+  color: white; border: none; padding: 10px 20px; border-radius: 5px;
   cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s;
 }
 .btn-guardar-modal:hover { background: #218838; }
@@ -204,7 +230,7 @@
 
 /* --- ESTILOS ESPECÍFICOS MODAL AGREGAR/EDITAR --- */
 #add-cirugia-modal, #edit-cirugia-modal {
-    max-width: 600px; /* Ancho específico */
+    max-width: 600px;
 }
 /* (Header usa el azul por defecto) */
 
@@ -212,22 +238,27 @@
 /* --- ESTILOS MODAL DETALLES (MEJORADOS) --- */
 .modal-detalles-cirugia {
   max-width: 750px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color); /* Variable */
 }
-.modal-detalles-cirugia .modal-header { /* Header violeta para detalles */
+.modal-detalles-cirugia .modal-header { /* Header violeta específico, se mantiene */
     background: linear-gradient(135deg, #3152e7, #146bed);
+    color: white; /* Asegurar contraste */
 }
 
 .modal-details-content {
   padding: 30px;
   overflow-y: auto;
   flex-grow: 1;
-  background-color: #f8f9fa;
+  background-color: var(--background-primary); /* Variable */
 }
 
 .modal-details-content h4 { /* Nombre paciente */
-  text-align: center; color: #2c3e50; margin-top: 0; margin-bottom: 25px;
-  font-size: 22px; font-weight: 600; border-bottom: 1px solid #e0e0e0; padding-bottom: 15px;
+  text-align: center;
+  color: var(--text-primary); /* Variable */
+  margin-top: 0; margin-bottom: 25px;
+  font-size: 22px; font-weight: 600;
+  border-bottom: 1px solid var(--border-color); /* Variable */
+  padding-bottom: 15px;
 }
 
 .detail-grid {
@@ -235,20 +266,26 @@
 }
 
 .detail-item {
-  background-color: #ffffff; padding: 15px 20px; border-radius: 8px;
-  border: 1px solid #e9ecef; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background-color: var(--background-secondary); /* Variable */
+  padding: 15px 20px; border-radius: 8px;
+  border: 1px solid var(--border-color); /* Variable */
+  box-shadow: 0 1px 3px var(--shadow-color); /* Variable */
 }
 
 .detail-item label {
-  display: block; font-size: 11px; color: #6c757d; margin-bottom: 6px;
+  display: block; font-size: 11px;
+  color: var(--text-secondary); /* Variable */
+  margin-bottom: 6px;
   font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
 }
 
 .detail-item span {
-  font-size: 15px; color: #343a40; font-weight: 500; word-break: break-word; line-height: 1.4;
+  font-size: 15px;
+  color: var(--text-primary); /* Variable */
+  font-weight: 500; word-break: break-word; line-height: 1.4;
 }
 
-/* Badge de Estado Mejorado */
+/* Badge de Estado Mejorado (SE MANTIENEN COLORES ESPECÍFICOS) */
 .detail-item span.estado {
     display: inline-block; padding: 4px 10px; border-radius: 15px;
     font-size: 12px; font-weight: 600; color: white; text-align: center; min-width: 90px;
@@ -267,13 +304,13 @@
 
 /* Botones dentro del Modal de Detalles */
 .modal-detalles-cirugia .modal-actions { /* Aplica a acciones de este modal */
-    justify-content: space-between; /* Empuja eliminar a la izq, otros a la der */
+    justify-content: space-between;
 }
 
+/* Colores botones específicos (Eliminar, Editar) se mantienen por significado */
 .btn-eliminar-modal { /* Rojo */
   background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px;
   cursor: pointer; font-weight: 500; font-size: 14px; transition: background-color 0.2s;
-  /* margin-right: auto; -> Quitado para usar space-between */
 }
 .btn-eliminar-modal:hover { background: #c0392b; }
 
@@ -283,20 +320,20 @@
 }
 .btn-editar-modal:hover { background: #e67e22; }
 
-/* Botón Cerrar (Gris) - Reutiliza btn-cancelar-modal */
+/* Botón Cerrar (Gris) - Reutiliza btn-cancelar-modal (ya usa variables) */
 
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .cirugias-header {
-        flex-direction: column; /* Apila título y botón */
-        align-items: flex-start; /* Alinea a la izquierda */
-        gap: 15px; /* Espacio entre título y botón */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
     .cirugias-list {
-        grid-template-columns: 1fr; /* Una columna en móvil */
+        grid-template-columns: 1fr;
     }
-    .modal-container { /* Aplica a todos los modales */
+    .modal-container {
         max-width: 95%;
         max-height: 95vh;
     }
@@ -311,5 +348,5 @@
     .detail-item span { font-size: 14px; }
     .modal-actions { padding: 15px; flex-wrap: wrap; justify-content: center;}
     .btn-eliminar-modal { margin-bottom: 10px; width: 100%;}
-    .btn-editar-modal, .btn-cancelar-modal { width: calc(50% - 5px); }
+    /* btn-editar-modal y btn-cancelar-modal ya usan 50% width */
 }

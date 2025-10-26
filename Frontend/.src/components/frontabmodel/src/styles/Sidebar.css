@@ -1,22 +1,24 @@
-/* Sidebar.css - Completo y Corregido (Enlaces más grandes, sin iconos) */
+/* Sidebar.css - ACTUALIZADO CON VARIABLES CSS */
 
 .app-sidebar {
   width: 280px;
-  background: white;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  background: var(--sidebar-bg); /* Variable */
+  box-shadow: 2px 0 10px var(--shadow-color); /* Variable */
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  border-right: 1px solid var(--border-color); /* Variable - borde sutil */
+  transition: background-color 0.3s ease; /* Transición para el fondo */
 }
 
 /* Sección del Perfil */
 .profile {
   text-align: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px; /* Separación antes de la nav */
+  border-bottom: 1px solid var(--border-color); /* Variable */
+  margin-bottom: 20px;
 }
 
 .profile-image-container {
@@ -31,9 +33,10 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #007bff;
-  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-  color: #004085;
+  border: 3px solid var(--accent-color); /* Variable - Mantenemos borde de acento */
+  /* Quitamos gradiente, usamos fondo secundario */
+  background: var(--background-secondary); /* Variable */
+  color: var(--accent-color); /* Variable - Usamos acento para el icono */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +44,8 @@
   font-weight: bold;
 }
 .profile-image {
-    background: #eee;
+   /* Fondo si no hay imagen, puede ser primario o secundario */
+   background: var(--background-primary); /* Variable */
 }
 
 .hidden-file-input {
@@ -52,8 +56,8 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: #f8f9fa;
-  border: 2px solid #ffffff;
+  background-color: var(--background-primary); /* Variable */
+  border: 2px solid var(--background-secondary); /* Variable - borde contra el fondo del avatar */
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -62,25 +66,32 @@
   justify-content: center;
   cursor: pointer;
   font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color); /* Variable */
   transition: background-color 0.2s;
+  color: var(--text-secondary); /* Variable */
 }
 .upload-icon-label:hover {
-  background-color: #e2e6ea;
+  background-color: var(--button-hover-bg); /* Variable - usar hover general? */
 }
+/* Ajuste hover en modo oscuro */
+:root[data-theme="dark"] .upload-icon-label:hover {
+    background-color: var(--background-primary);
+}
+
 
 .upload-button {
   margin-top: 10px;
   padding: 6px 12px;
   font-size: 14px;
-  background-color: #28a745;
-  color: white;
+  background-color: #28a745; /* Mantenemos verde específico */
+  color: white; /* Mantenemos blanco */
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 .upload-button:disabled {
-    background-color: #6c757d;
+    background-color: var(--text-secondary); /* Variable */
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
@@ -88,57 +99,59 @@
 .sidebar-welcome-message {
   font-size: 16px;
   font-weight: bold;
-  color: #555;
+  color: var(--text-secondary); /* Variable */
   text-align: center;
   margin-top: 15px;
-  margin-bottom: 5px; /* Reducido para acercar a nav */
+  margin-bottom: 5px;
 }
 
 /* --- Navegación (Estilos Mejorados) --- */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Espacio reducido entre enlaces */
-  /* margin-top: 10px; -> Eliminado, ya hay margen en .profile y .sidebar-welcome-message */
-  margin-bottom: 20px; /* Espacio antes del divisor */
-  flex: 1; /* Ocupa espacio para empujar divisor */
+  gap: 5px;
+  margin-bottom: 20px;
+  flex: 1;
 }
 
 .nav-link {
   display: block;
-  padding: 14px 20px; /* Más padding */
-  color: #495057; /* Gris oscuro */
+  padding: 14px 20px;
+  color: var(--text-secondary); /* Variable */
   text-decoration: none;
   border-radius: 8px;
-  font-size: 16px; /* Más grande */
-  font-weight: 500; /* Medio */
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, border-left 0.2s ease, padding-left 0.2s ease; /* Transiciones suaves */
-  border-left: 4px solid transparent; /* Espacio reservado para borde activo */
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, border-left 0.2s ease, padding-left 0.2s ease;
+  border-left: 4px solid transparent;
 }
 
 .nav-link:hover {
-  background-color: #f1f3f5; /* Gris muy claro */
-  color: #0056b3; /* Azul oscuro */
-  transform: translateX(3px); /* Pequeño desplazamiento */
+  background-color: var(--background-primary); /* Variable */
+  color: var(--accent-color); /* Variable */
+  transform: translateX(3px);
 }
 
 .nav-link.active {
-  background-color: #e7f1ff; /* Azul muy claro */
-  color: #0056b3; /* Azul oscuro */
-  font-weight: 600; /* Semi-bold */
-  border-left: 4px solid #0056b3; /* Borde izquierdo azul */
-  padding-left: 16px; /* Ajusta padding por el borde (20px original - 4px borde) */
+  background-color: var(--accent-color-light); /* Necesitamos una variable para azul claro o similar */
+  color: var(--accent-color); /* Variable */
+  font-weight: 600;
+  border-left: 4px solid var(--accent-color); /* Variable */
+  padding-left: 16px;
 }
-/* Eliminados estilos .nav-icon */
+/* Definir --accent-color-light en theme.css si no existe */
+/* :root { --accent-color-light: #e7f1ff; } */
+/* :root[data-theme="dark"] { --accent-color-light: rgba(96, 165, 250, 0.2); } */
+
 
 /* --- Fin Navegación --- */
 
 
 /* Divisor y Botón de Ocultar */
 .sidebar-divider {
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color); /* Variable */
   padding-top: 15px;
-  margin-top: auto; /* Asegura que esté abajo */
+  margin-top: auto;
   display: flex;
   justify-content: flex-end;
 }
@@ -146,7 +159,7 @@
 .toggle-sidebar-btn {
   background: none;
   border: none;
-  color: #7f8c8d;
+  color: var(--text-secondary); /* Variable */
   cursor: pointer;
   font-size: 18px;
   padding: 8px;
@@ -160,8 +173,6 @@
 }
 
 .toggle-sidebar-btn:hover {
-  background: #f8f9fa;
-  color: #3498db;
+  background: var(--background-primary); /* Variable */
+  color: var(--accent-color); /* Variable */
 }
-
-/* Botón de Logout ELIMINADO */

@@ -7,10 +7,13 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
+  /* Reemplazamos los colores fijos con variables */
+  background-color: var(--background-primary); /* Variable para el fondo principal */
+  color: var(--text-primary);             /* Variable para el texto principal */
+  /* La transición ya está definida en theme.css, así que no es necesaria aquí */
 }
 
 #root {
+  /* Mantenemos la altura, esto no depende del tema */
   height: 100vh;
 }

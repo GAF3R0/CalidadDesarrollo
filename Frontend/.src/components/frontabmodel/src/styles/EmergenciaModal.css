@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7); /* Mantenemos overlay oscuro */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,18 +13,19 @@
 }
 
 .emergencia-modal {
-  background: white;
+  background: var(--background-secondary); /* Variable */
   border-radius: 15px;
   width: 90%;
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
 }
 
 .modal-header {
+  /* Mantenemos gradiente rojo específico para emergencia */
   background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
+  color: white; /* Mantenemos blanco para contraste */
   padding: 20px;
   border-radius: 15px 15px 0 0;
   display: flex;
@@ -35,18 +36,26 @@
 .modal-header h2 {
   margin: 0;
   font-size: 20px;
+  color: white; /* Asegurar que el título sea blanco */
 }
 
 .close-button {
   background: none;
   border: none;
-  color: white;
+  color: white; /* Mantenemos blanco */
   font-size: 24px;
   cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 }
+.close-button:hover {
+  opacity: 1;
+}
+
 
 .emergencia-form {
   padding: 25px;
+  background-color: var(--background-secondary); /* Variable */
 }
 
 .emergencia-form .form-group {
@@ -57,7 +66,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-primary); /* Variable */
   font-size: 14px;
 }
 
@@ -66,16 +75,19 @@
 .emergencia-form .form-group textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid var(--border-color); /* Variable */
   border-radius: 4px;
   font-size: 14px;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
 }
 
 .emergencia-form .form-group input:focus,
 .emergencia-form .form-group select:focus,
 .emergencia-form .form-group textarea:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--accent-color); /* Variable */
+  background-color: var(--background-secondary); /* Variable */
 }
 
 .urgencia-options {
@@ -88,12 +100,15 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: var(--text-primary); /* Variable para el texto de la opción */
 }
 
 .urgencia-option input {
   margin-right: 6px;
+  cursor: pointer; /* Hacer el radio button clickeable */
 }
 
+/* Colores específicos para urgencia (se mantienen) */
 .urgencia-alta {
   color: #e74c3c;
   font-weight: 600;
@@ -114,32 +129,41 @@
   gap: 12px;
   justify-content: flex-end;
   margin-top: 25px;
+  /* El padding y borde ya vienen del .modal-actions general en theme.css si lo pones ahí, o puedes añadirlo aquí */
+  padding: 15px 25px;
+  border-top: 1px solid var(--border-color); /* Variable */
+  background-color: var(--background-primary); /* Variable */
+  border-radius: 0 0 15px 15px; /* Para que coincida con el modal */
 }
 
 .btn-cancelar {
-  background: #95a5a6;
-  color: white;
+  /* Usamos variable de texto secundario como fondo gris */
+  background: var(--text-secondary);
+  color: var(--background-secondary); /* Contraste */
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s ease;
 }
 
 .btn-cancelar:hover {
-  background: #7f8c8d;
+  background: var(--text-primary); /* Más oscuro */
 }
 
 .btn-confirmar {
+  /* Mantenemos rojo específico para confirmar emergencia */
   background: #e74c3c;
-  color: white;
+  color: white; /* Mantenemos blanco */
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s ease;
 }
 
 .btn-confirmar:hover {
-  background: #c0392b;
+  background: #c0392b; /* Rojo más oscuro */
 }

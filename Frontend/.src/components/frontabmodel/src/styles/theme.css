@@ -1,50 +1,178 @@
 /* theme.css */
 
-/* Este es el truco principal. 
-  Usamos variables CSS para definir nuestros colores.
-  Por defecto, aplicamos los colores del modo claro.
-*/
+/* Modo Claro (predeterminado) */
 :root {
   --background-primary: #f4f7fa; /* Fondo principal claro */
   --background-secondary: #ffffff; /* Fondo de las tarjetas y modales */
-  --text-primary: #1e293b;        /* Texto principal oscuro */
+  --text-primary: #1e293b;       /* Texto principal oscuro */
   --text-secondary: #64748b;     /* Texto secundario más claro */
   --border-color: #e2e8f0;       /* Color de los bordes */
   --accent-color: #3b82f6;       /* Color de acento (botones, enlaces activos) */
   --sidebar-bg: #ffffff;         /* Fondo de la barra lateral */
   --header-bg: #ffffff;          /* Fondo de la cabecera */
   --shadow-color: rgba(0, 0, 0, 0.05); /* Color de la sombra */
+  --button-text-color: #ffffff; /* Color de texto para botones con fondo de acento */
+  --button-hover-bg: #2563eb; /* Color de hover para botones con fondo de acento */
+
+  /* Colores específicos para el botón de tema (opcional, puedes usar los generales) */
+  --theme-button-bg: #e2e8f0;
+  --theme-button-hover-bg: #cbd5e1;
+  --theme-button-text: #334155;
 }
 
-/* Cuando el contenedor principal tenga la clase 'dark-mode', 
-  sobrescribimos las variables con los colores del modo oscuro.
-*/
-.dark-mode {
+/* Modo Oscuro */
+:root[data-theme="dark"] {
   --background-primary: #1e293b; /* Fondo principal oscuro */
   --background-secondary: #334155; /* Fondo de las tarjetas y modales */
-  --text-primary: #f1f5f9;        /* Texto principal claro */
+  --text-primary: #f1f5f9;       /* Texto principal claro */
   --text-secondary: #94a3b8;     /* Texto secundario más oscuro */
   --border-color: #475569;       /* Color de los bordes */
   --accent-color: #60a5fa;       /* Color de acento para modo oscuro */
   --sidebar-bg: #334155;         /* Fondo de la barra lateral */
   --header-bg: #334155;          /* Fondo de la cabecera */
   --shadow-color: rgba(0, 0, 0, 0.2);  /* Sombra más pronunciada */
+  --button-text-color: #1e293b; /* Color de texto para botones con fondo de acento */
+  --button-hover-bg: #93c5fd; /* Color de hover para botones con fondo de acento */
+
+  /* Colores específicos para el botón de tema en modo oscuro */
+  --theme-button-bg: #475569;
+  --theme-button-hover-bg: #64748b;
+  --theme-button-text: #f1f5f9;
 }
 
-/* Ahora, en el resto de tus archivos CSS (App.css, Layout.css, etc.),
-  debes reemplazar los colores fijos (ej: background: #fff;) 
-  por estas variables (ej: background: var(--background-secondary);).
-  Esto hará que cambien automáticamente al cambiar de tema.
-  
-  Ejemplo de cómo deberías actualizar tus otros archivos CSS:
-  
-  .layout {
-    background-color: var(--background-primary);
-    color: var(--text-primary);
-  }
+/* Estilos generales que usan las variables */
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0; /* Asegúrate de resetear márgenes si no lo has hecho */
+  font-family: sans-serif; /* Define una fuente base */
+}
 
-  .profile-card {
-    background-color: var(--background-secondary);
-    border: 1px solid var(--border-color);
-  }
+/* --- ESTILOS PARA EL BOTÓN DE CAMBIO DE TEMA --- */
+/* (Puedes usar #theme-toggle-button o .theme-toggle-button-header como selector) */
+.theme-toggle-button-header {
+  background-color: var(--theme-button-bg);
+  color: var(--theme-button-text);
+  border: 1px solid var(--border-color); /* Borde sutil */
+  padding: 0; /* Quitamos padding para controlar tamaño con width/height */
+  font-size: 1.5rem; /* Tamaño del icono */
+  border-radius: 50%; /* Botón circular */
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  width: 40px;  /* Ancho fijo */
+  height: 40px; /* Alto fijo */
+  display: inline-flex; /* Usar flex para centrar */
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px; /* Espacio a la izquierda */
+  line-height: 1; /* Asegura centrado vertical del icono */
+  box-shadow: 0 1px 3px var(--shadow-color); /* Sombra sutil */
+}
+
+.theme-toggle-button-header:hover {
+  background-color: var(--theme-button-hover-bg);
+}
+
+.theme-toggle-button-header #theme-icon {
+  display: inline-block; /* O flex si necesitas más control */
+}
+
+/* --- FIN ESTILOS BOTÓN --- */
+
+
+/* --- EJEMPLOS DE CÓMO USAR LAS VARIABLES EN OTROS COMPONENTES --- */
+/* Asegúrate de que tus otros archivos CSS (Header.css, Sidebar.css, etc.) 
+   usen estas variables en lugar de colores fijos. */
+
+/* Ejemplo en Header.css (si no pones los estilos del botón aquí) */
+/* .app-header {
+     background-color: var(--header-bg);
+     border-bottom: 1px solid var(--border-color);
+     box-shadow: 0 2px 4px var(--shadow-color);
+   }
+
+   .app-title {
+     color: var(--text-primary);
+   }
+
+   .logout-button-header {
+     background-color: var(--accent-color);
+     color: var(--button-text-color);
+   }
+
+   .logout-button-header:hover {
+     background-color: var(--button-hover-bg);
+   }
 */
+
+/* Ejemplo en Sidebar.css */
+/* .sidebar {
+     background-color: var(--sidebar-bg);
+     border-right: 1px solid var(--border-color);
+   }
+
+   .sidebar a {
+     color: var(--text-secondary);
+   }
+
+   .sidebar a.active {
+     color: var(--accent-color);
+     background-color: var(--background-primary);
+   }
+*/
+
+/* Ejemplo general para tarjetas o modales */
+/* .card, .modal {
+     background-color: var(--background-secondary);
+     border: 1px solid var(--border-color);
+     box-shadow: 0 4px 6px var(--shadow-color);
+   }
+*/
+/* ... (tus variables :root y :root[data-theme="dark"] existentes) ... */
+
+/* Estilos generales que usan las variables */
+/* ... (tu estilo de body existente) ... */
+
+/* --- ESTILOS PARA EL BOTÓN DE CAMBIO DE TEMA --- */
+/* ... (tus estilos de botón existentes) ... */
+
+/* --- ESTILOS PARA BARRAS DE DESPLAZAMIENTO (SCROLLBARS) --- */
+
+/* Estilo general para la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho para scroll vertical */
+  height: 8px; /* Alto para scroll horizontal */
+}
+
+/* Estilo del fondo (track) de la barra de desplazamiento */
+::-webkit-scrollbar-track {
+  background: var(--background-primary); /* Fondo claro/oscuro según el tema */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilo del "pulgar" (thumb) de la barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-secondary); /* Color del thumb (gris claro/oscuro) */
+  border-radius: 4px; /* Bordes redondeados */
+  border: 2px solid var(--background-primary); /* Crea un pequeño borde alrededor del thumb */
+}
+
+/* Estilo del thumb al pasar el ratón por encima */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-primary); /* Color más oscuro/claro al hacer hover */
+}
+
+/* Estilos específicos para Firefox (opcional pero recomendado) */
+/* Firefox usa propiedades diferentes */
+* {
+  scrollbar-width: thin; /* Hace la barra más delgada */
+  scrollbar-color: var(--text-secondary) var(--background-primary); /* thumb track */
+}
+
+/* --- FIN ESTILOS SCROLLBARS --- */
+
+
+/* --- EJEMPLOS DE CÓMO USAR LAS VARIABLES EN OTROS COMPONENTES --- */
+/* ... (tus ejemplos comentados existentes) ... */
+

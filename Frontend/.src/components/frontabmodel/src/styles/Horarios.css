@@ -1,163 +1,397 @@
-/* Horarios.css - COMPLETO (5 Estados: Prog, Baja, Media, Emerg, Comp) */
+/* Horarios.css - COMPLETO (5 Estados: Prog, Baja, Media, Emerg, Comp) - ACTUALIZADO CON VARIABLES CSS */
 
 .horarios-container {
   padding: 20px;
-  background: #f0f2f5;
+  background-color: var(--background-primary); /* Variable */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 .horarios-header {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
-  background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); order: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: var(--background-secondary); /* Variable */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  order: 1;
 }
-.horarios-header h2 { color: #2c3e50; margin: 0; font-size: 24px; }
-.header-actions { display: flex; gap: 15px; flex-wrap: nowrap; overflow-x: auto; }
-.btn-quirofanos { background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+
+.horarios-header h2 {
+  color: var(--text-primary); /* Variable */
+  margin: 0;
+  font-size: 24px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+/* Mantenemos gradientes específicos para estos botones */
+.btn-quirofanos {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap;
+}
 .btn-quirofanos:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); }
-.btn-agregar-horario { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+
+.btn-agregar-horario {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+  border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap;
+}
 .btn-agregar-horario:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3); }
-.btn-tabla-horarios { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap; }
+
+.btn-tabla-horarios {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+  border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; white-space: nowrap;
+}
 .btn-tabla-horarios:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); }
-.emergency-btn-horarios { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); animation: pulse 2s infinite; white-space: nowrap; }
+
+.emergency-btn-horarios {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); animation: pulse 2s infinite; white-space: nowrap;
+}
 .emergency-btn-horarios:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4); animation: none; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
 
 /* TABS DE DÍAS */
-.dias-semana-tabs { display: flex; gap: 5px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); order: 2; }
-.dia-tab { flex: 1; padding: 10px 15px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; color: #7f8c8d; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px; }
-.dia-tab:hover { background: #e9ecef; }
-.dia-tab.active { background: #007bff; color: white; border-color: #007bff; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); transform: translateY(-2px); }
+.dias-semana-tabs {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  background-color: var(--background-secondary); /* Variable */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  order: 2;
+}
+.dia-tab {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid var(--border-color); /* Variable */
+  border-radius: 8px;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-secondary); /* Variable */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+.dia-tab:hover {
+  background-color: #e9ecef; /* Considerar variable --hover-bg-light o similar si se define */
+}
+.dia-tab.active {
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
+  border-color: var(--accent-color); /* Variable */
+  /* Sombra requiere ajuste manual o variable --accent-shadow-color */
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+}
 
 /* LEYENDA (ACTUALIZADA) */
-.leyenda-horarios { background: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; order: 3; }
-.leyenda-horarios h4 { color: #2c3e50; margin: 0 0 10px 0; font-size: 14px; font-weight: 600;}
+.leyenda-horarios {
+  background-color: var(--background-secondary); /* Variable */
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  margin-bottom: 20px;
+  order: 3;
+}
+.leyenda-horarios h4 {
+  color: var(--text-primary); /* Variable */
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
 .leyenda-items { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-.leyenda-item { display: flex; align-items: center; gap: 6px; }
+.leyenda-item { display: flex; align-items: center; gap: 6px; color: var(--text-primary); /* Variable */ }
+
+/* Mantenemos colores específicos de estado para la leyenda */
 .color-box { width: 18px; height: 18px; border-radius: 4px; border-left: 4px solid; }
 .color-box.programada { background-color: #3498db; border-left-color: #3498db; } /* Azul */
 .color-box.baja { background-color: #27ae60; border-left-color: #27ae60; } /* Verde */
 .color-box.medio { background-color: #f39c12; border-left-color: #f39c12; } /* Naranja */
 .color-box.emergencia { background-color: #e74c3c; border-left-color: #e74c3c; } /* Rojo */
-/* .color-box.en-proceso eliminado */
 .color-box.completada { background-color: #6c757d; border-left-color: #6c757d; } /* Gris oscuro */
 
-
 /* CALENDARIO */
-.calendario-horarios { background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 20px; order: 4; }
-.calendario-header { display: grid; background: #f8f9fa; color: #2c3e50; padding: 15px 0; border-bottom: 2px solid #e9ecef; }
+.calendario-horarios {
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  overflow: hidden;
+  margin-bottom: 20px;
+  order: 4;
+}
+.calendario-header {
+  display: grid;
+  background-color: var(--background-primary); /* Variable */
+  color: var(--text-primary); /* Variable */
+  padding: 15px 0;
+  border-bottom: 2px solid var(--border-color); /* Variable */
+}
 .hora-header { padding: 0 15px; font-weight: 600; }
-.quirofano-header { padding: 0 15px; text-align: center; border-left: 1px solid #e0e0e0; }
-.quirofano-nombre { display: block; font-size: 16px; font-weight: 700; margin-bottom: 5px; color: #007bff; }
+.quirofano-header {
+  padding: 0 15px;
+  text-align: center;
+  border-left: 1px solid var(--border-color); /* Variable */
+}
+.quirofano-nombre {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--accent-color); /* Variable */
+}
 .quirofano-estado { font-size: 12px; font-weight: 600; opacity: 0.9; }
+/* Mantenemos colores específicos de estado */
 .quirofano-estado.estado-disponible { color: #27ae60; }
 .quirofano-estado.estado-ocupado { color: #e74c3c; }
 .quirofano-estado.estado-mantenimiento { color: #f39c12; }
+
 .calendario-body { display: grid; height: 1400px; position: relative; overflow-y: auto; }
 .horas-columna { display: flex; flex-direction: column; }
-.hora-slot { height: 58px; border-bottom: 1px dotted #e0e0e0; display: flex; align-items: center; padding: 0 15px; position: relative; background: #ffffff; }
-.hora-texto { font-size: 12px; color: #7f8c8d; font-weight: 600; position: relative; z-index: 1; }
+.hora-slot {
+  height: 58px;
+  border-bottom: 1px dotted var(--border-color); /* Variable */
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  position: relative;
+  background-color: var(--background-secondary); /* Variable */
+}
+.hora-texto {
+  font-size: 12px;
+  color: var(--text-secondary); /* Variable */
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
 .linea-hora, .linea-hora-interna { position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: transparent; z-index: 0; }
-.quirofano-columna { position: relative; border-left: 1px solid #e0e0e0; }
-.celda-horario { height: 58px; border-bottom: 1px dotted #e0e0e0; position: relative; }
+.quirofano-columna {
+  position: relative;
+  border-left: 1px solid var(--border-color); /* Variable */
+}
+.celda-horario {
+  height: 58px;
+  border-bottom: 1px dotted var(--border-color); /* Variable */
+  position: relative;
+}
 
-/* BLOQUES DE CIRUGÍA (ACTUALIZADO) */
-.cirugia-block { position: absolute; left: 4px; right: 4px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; transition: all 0.3s ease; overflow: hidden; }
-.cirugia-block:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 10; }
+/* BLOQUES DE CIRUGÍA (ACTUALIZADO - Mantenemos colores específicos de estado) */
+.cirugia-block {
+  position: absolute; left: 4px; right: 4px; border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color); /* Variable */
+  cursor: pointer; transition: all 0.3s ease; overflow: hidden;
+}
+.cirugia-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--shadow-color); /* Variable */
+  z-index: 10;
+}
 .cirugia-block.programada { border-left: 4px solid #3498db; background-color: #3498db;} /* Azul */
 .cirugia-block.baja { border-left: 4px solid #27ae60; background-color: #27ae60;} /* Verde */
 .cirugia-block.medio { border-left: 4px solid #f39c12; background-color: #f39c12;} /* Naranja */
 .cirugia-block.emergencia { border-left: 4px solid #e74c3c; background-color: #e74c3c; animation: emergencyPulse 2s infinite; } /* Rojo */
-/* .cirugia-block.en-proceso eliminado */
 .cirugia-block.completada { border-left: 4px solid #6c757d; background-color: #6c757d; opacity: 0.8; } /* Gris oscuro */
 
 @keyframes emergencyPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-.cirugia-content { padding: 8px 10px; color: white; height: 100%; }
+.cirugia-content { padding: 8px 10px; color: white; height: 100%; } /* Mantenemos blanco para contraste */
 .cirugia-titulo { font-size: 12px; font-weight: 700; margin-bottom: 4px; line-height: 1.2; }
 .cirugia-especialista, .cirugia-paciente { font-size: 10px; opacity: 0.9; margin-bottom: 2px; }
 .cirugia-horario { font-size: 9px; opacity: 0.7; font-weight: 600; }
 
-/* ... (Resto de estilos para modales, etc., sin cambios) ... */
+
 /* MODAL AGREGAR/EDITAR HORARIO */
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-.modal-agregar-horario { background: white; border-radius: 15px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-.modal-header { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 20px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center; }
-.modal-header h2 { margin: 0; font-size: 20px; }
-.close-button { background: none; border: none; color: white; font-size: 24px; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
-.horario-form { padding: 25px; }
+.modal-agregar-horario {
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 15px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
+}
+.modal-header { /* Mantenemos gradiente azul */
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white; padding: 20px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center;
+}
+.modal-header h2 { margin: 0; font-size: 20px; color: white; /* Asegurar contraste */ }
+.close-button { background: none; border: none; color: white; font-size: 24px; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; opacity: 0.8; transition: opacity 0.2s; }
+.close-button:hover { opacity: 1; }
+
+.horario-form { padding: 25px; background-color: var(--background-secondary); border-radius: 0 0 15px 15px; } /* Añadido fondo y border-radius */
 .horario-form .form-group { margin-bottom: 20px; }
-.horario-form .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50; font-size: 14px; }
-.horario-form .form-group input, .horario-form .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 14px; background: #fafafa; }
-.horario-form .form-group input:focus, .horario-form .form-group select:focus { outline: none; border-color: #3498db; background: white; }
+.horario-form .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-primary); font-size: 14px; }
+.horario-form .form-group input, .horario-form .form-group select {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;
+  background-color: var(--background-primary); color: var(--text-primary);
+}
+.horario-form .form-group input:focus, .horario-form .form-group select:focus {
+  outline: none; border-color: var(--accent-color); background-color: var(--background-secondary);
+}
 .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 25px; }
-.btn-cancelar { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; }
-.btn-cancelar:hover { background: #7f8c8d; }
-.btn-guardar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+
+.btn-cancelar { /* Usar variable para gris */
+  background-color: var(--text-secondary);
+  color: var(--background-secondary); /* Contraste */
+  border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background-color 0.2s;
+}
+.btn-cancelar:hover { background-color: var(--text-primary); }
+
+.btn-guardar { /* Mantenemos verde específico */
+  background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: background-color 0.2s;
+}
 .btn-guardar:hover { background: #229954; }
 
 /* GRID DE SELECCIÓN DE HORA */
-.selected-time-display { display: block; margin-bottom: 8px; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 4px; background-color: #e9ecef; font-size: 14px; color: #2c3e50; text-align: center; }
-.time-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 8px; max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #e0e0e0; border-radius: 4px; }
-.time-slot-button { padding: 8px 5px; font-size: 13px; border: 1px solid #bdc3c7; border-radius: 4px; background-color: #ffffff; color: #2c3e50; cursor: pointer; transition: all 0.2s ease; text-align: center; }
-.time-slot-button:hover { background-color: #e9ecef; border-color: #adb5bd; }
-.time-slot-button.selected { background-color: #007bff; color: white; border-color: #0056b3; font-weight: bold; }
+.selected-time-display {
+  display: block; margin-bottom: 8px; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 4px;
+  background-color: var(--background-primary); font-size: 14px; color: var(--text-primary); text-align: center;
+}
+.time-grid-container {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); gap: 8px; max-height: 200px; overflow-y: auto;
+  padding: 5px; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--background-primary); /* Fondo del contenedor */
+}
+.time-slot-button {
+  padding: 8px 5px; font-size: 13px; border: 1px solid var(--border-color); border-radius: 4px;
+  background-color: var(--background-secondary); color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; text-align: center;
+}
+.time-slot-button:hover {
+  background-color: var(--background-primary); border-color: var(--text-secondary);
+}
+.time-slot-button.selected {
+  background-color: var(--accent-color); color: var(--button-text-color); border-color: var(--accent-color); font-weight: bold;
+}
+/* Estilos scrollbar (pueden requerir ajustes para modo oscuro) */
 .time-grid-container::-webkit-scrollbar { width: 6px; }
-.time-grid-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-.time-grid-container::-webkit-scrollbar-thumb { background: #bdc3c7; border-radius: 3px; }
-.time-grid-container::-webkit-scrollbar-thumb:hover { background: #95a5a6; }
+.time-grid-container::-webkit-scrollbar-track { background: var(--background-primary); border-radius: 3px; }
+.time-grid-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+.time-grid-container::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
 /* MODAL GESTIÓN QUIRÓFANOS */
-.modal-quirofanos { background: white; border-radius: 15px; width: 90%; max-width: 800px; max-height: 90vh; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
+.modal-quirofanos {
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 15px; width: 90%; max-width: 800px; max-height: 90vh;
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
+  display: flex; flex-direction: column;
+}
 .quirofanos-grid-modal { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 25px 25px 25px; overflow-y: auto; }
-.quirofano-card-modal { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #3498db; transition: all 0.3s ease; }
-.quirofano-card-modal:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.quirofano-card-modal {
+  background-color: var(--background-secondary); /* Variable */
+  padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px var(--shadow-color); /* Variable */
+  border-left: 4px solid var(--accent-color); /* Variable default */
+  transition: all 0.3s ease;
+}
+.quirofano-card-modal:hover { transform: translateY(-3px); box-shadow: 0 5px 15px var(--shadow-color); /* Variable */ }
+/* Colores específicos de estado mantenidos */
 .quirofano-card-modal.disponible { border-left-color: #27ae60; }
 .quirofano-card-modal.ocupado { border-left-color: #e74c3c; }
 .quirofano-card-modal.mantenimiento { border-left-color: #f39c12; }
-.quirofano-card-modal h3 { color: #2c3e50; margin-bottom: 10px; font-size: 18px; }
+
+.quirofano-card-modal h3 { color: var(--text-primary); margin-bottom: 10px; font-size: 18px; }
 .quirofano-card-modal .estado { font-weight: 600; margin-bottom: 8px; }
+/* Colores específicos de estado mantenidos */
 .quirofano-card-modal .estado.disponible { color: #27ae60; }
 .quirofano-card-modal .estado.ocupado { color: #e74c3c; }
 .quirofano-card-modal .estado.mantenimiento { color: #f39c12; }
-.equipamiento { color: #7f8c8d; margin-bottom: 15px; font-size: 14px; }
+
+.equipamiento { color: var(--text-secondary); margin-bottom: 15px; font-size: 14px; }
 .quirofano-actions-modal { display: flex; gap: 8px; }
-.btn-editar-quirofano { background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; flex: 1; }
-.btn-editar-quirofano:hover { background: #2980b9; }
-.btn-editar-quirofano:disabled { background: #bdc3c7; cursor: not-allowed; }
-.btn-cerrar-quirofanos { background: #95a5a6; color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: 600; margin: 0 25px 25px 25px; width: calc(100% - 50px); }
-.btn-cerrar-quirofanos:hover { background: #7f8c8d; }
+
+.btn-editar-quirofano {
+  background-color: var(--accent-color); /* Variable */
+  color: var(--button-text-color); /* Variable */
+  border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; flex: 1; transition: background-color 0.2s;
+}
+.btn-editar-quirofano:hover { background-color: var(--button-hover-bg); /* Variable */ }
+.btn-editar-quirofano:disabled { background-color: var(--border-color); color: var(--text-secondary); cursor: not-allowed; }
+
+.btn-cerrar-quirofanos { /* Usar variable para gris */
+  background-color: var(--text-secondary);
+  color: var(--background-secondary); /* Contraste */
+  border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: 600;
+  margin: 0 25px 25px 25px; width: calc(100% - 50px); transition: background-color 0.2s;
+}
+.btn-cerrar-quirofanos:hover { background-color: var(--text-primary); }
 
 /* MODAL LISTA DE EDICIÓN (ESTADO) */
-.modal-lista-edicion { background: white; border-radius: 15px; width: 90%; max-width: 700px; max-height: 80vh; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
-.lista-edicion-scroll { padding: 10px 25px 25px 25px; overflow-y: auto; flex: 1; }
-.lista-vacia { text-align: center; padding: 30px; color: #7f8c8d; font-style: italic; }
-.lista-edicion-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #e9ecef; gap: 15px; }
+.modal-lista-edicion {
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 15px; width: 90%; max-width: 700px; max-height: 80vh; overflow: hidden;
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
+  display: flex; flex-direction: column;
+}
+.lista-edicion-scroll { padding: 10px 25px 25px 25px; overflow-y: auto; flex: 1; background-color: var(--background-secondary); /* Asegurar fondo */ }
+.lista-vacia { text-align: center; padding: 30px; color: var(--text-secondary); font-style: italic; }
+.lista-edicion-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color); gap: 15px; }
 .lista-edicion-item:last-child { border-bottom: none; }
 .lista-edicion-info { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; overflow: hidden; }
-.lista-edicion-titulo { font-weight: 600; font-size: 16px; color: #2c3e50; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lista-edicion-detalle { font-size: 14px; color: #7f8c8d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.select-estado-lista { padding: 6px 10px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 13px; background-color: white; flex-shrink: 0; margin-left: auto; }
+.lista-edicion-titulo { font-weight: 600; font-size: 16px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lista-edicion-detalle { font-size: 14px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.select-estado-lista {
+  padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;
+  background-color: var(--background-secondary); color: var(--text-primary); flex-shrink: 0; margin-left: auto;
+}
 
 /* FORMULARIO Y BOTÓN ELIMINAR QUIRÓFANO */
-.form-agregar-quirofano { padding: 20px 25px; background: #f8f9fa; border-bottom: 2px solid #e9ecef; }
-.form-agregar-quirofano h3 { margin: 0 0 15px 0; color: #2c3e50; font-size: 16px; }
+.form-agregar-quirofano { padding: 20px 25px; background-color: var(--background-primary); border-bottom: 2px solid var(--border-color); }
+.form-agregar-quirofano h3 { margin: 0 0 15px 0; color: var(--text-primary); font-size: 16px; }
 .form-agregar-inputs { display: flex; gap: 10px; }
-.form-agregar-inputs input { flex: 2; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 14px; }
-.form-agregar-inputs select { flex: 1; padding: 10px 12px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 14px; background: white; }
-.btn-guardar-quirofano { flex-basis: 40px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; font-weight: 600; }
+.form-agregar-inputs input {
+  flex: 2; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;
+  background-color: var(--background-secondary); color: var(--text-primary);
+}
+.form-agregar-inputs input:focus { border-color: var(--accent-color); outline: none; }
+.form-agregar-inputs select {
+  flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;
+  background-color: var(--background-secondary); color: var(--text-primary);
+}
+.form-agregar-inputs select:focus { border-color: var(--accent-color); outline: none; }
+.btn-guardar-quirofano { /* Mantenemos verde específico */
+  flex-basis: 40px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; font-weight: 600; transition: background-color 0.2s;
+}
 .btn-guardar-quirofano:hover { background: #229954; }
-.btn-eliminar-quirofano { background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; flex: 1; transition: all 0.3s ease; }
+
+.btn-eliminar-quirofano { /* Mantenemos rojo específico */
+  background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; flex: 1; transition: all 0.3s ease;
+}
 .btn-eliminar-quirofano:hover { background: #c0392b; }
-.btn-eliminar-quirofano:disabled { background: #bdc3c7; cursor: not-allowed; }
+.btn-eliminar-quirofano:disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; }
 
 /* MODAL DE DETALLES */
-.modal-detalle-horario { background: white; border-radius: 15px; width: 90%; max-width: 600px; max-height: 85vh; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
-.detalle-content { padding: 25px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.detalle-item { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 3px solid; }
-.detalle-item label { display: block; font-size: 12px; color: #7f8c8d; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
-.detalle-item span { font-size: 16px; color: #2c3e50; font-weight: 500; word-break: break-word; }
+.modal-detalle-horario {
+  background-color: var(--background-secondary); /* Variable */
+  border-radius: 15px; width: 90%; max-width: 600px; max-height: 85vh;
+  box-shadow: 0 10px 30px var(--shadow-color); /* Variable */
+  display: flex; flex-direction: column;
+}
+.detalle-content { padding: 25px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background-color: var(--background-secondary); /* Asegurar fondo */ }
+.detalle-item {
+  background-color: var(--background-primary); /* Variable */
+  padding: 15px; border-radius: 8px; border-left: 3px solid; /* El color se asignará dinámicamente o por clase de estado */
+  border-color: var(--accent-color); /* Variable default, anular con clases de estado si es necesario */
+}
+.detalle-item label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
+.detalle-item span { font-size: 16px; color: var(--text-primary); font-weight: 500; word-break: break-word; }
 .detalle-item.full-width { grid-column: 1 / -1; }
-.modal-actions-detalle { padding: 20px 25px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px;}
+.modal-actions-detalle {
+  padding: 20px 25px; border-top: 1px solid var(--border-color); /* Variable */
+  display: flex; justify-content: flex-end; gap: 10px;
+  background-color: var(--background-primary); /* Variable */
+  border-radius: 0 0 15px 15px; /* Redondear esquinas */
+}
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
