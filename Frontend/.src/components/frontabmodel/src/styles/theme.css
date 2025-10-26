@@ -1,227 +1,253 @@
 /* theme.css */
 
-/* Modo Claro (predeterminado) - Paleta actualizada */
+/* Modo Claro (predeterminado) */
 :root {
-  --background-primary: #F8F9FA;   /* Fondo principal claro (Gris muy claro) */
-  --background-secondary: #ffffff; /* Fondo de las tarjetas y modales (Blanco) */
-  --text-primary: #212529;         /* Texto principal oscuro */
-  --text-secondary: #6C757D;       /* Texto secundario gris */
-  --border-color: #DEE2E6;         /* Color de los bordes sutiles */
-  --accent-color: #1ABC9C;         /* Color de acento principal (Teal) */
-  --accent-color-rgb: 26, 188, 156; /* RGB para #1ABC9C (usado en box-shadow) */
-  --accent-color-darker: #16A085;  /* Variante más oscura del acento para hover */
-  --sidebar-bg: #2C3E50;           /* Fondo de la barra lateral (Azul medianoche oscuro) */
-  --sidebar-text-color: #ECF0F1;   /* Texto/Iconos en la barra lateral (Gris claro) */
-  --sidebar-active-bg: rgba(26, 188, 156, 0.1); /* Fondo sutil para item activo en sidebar */
-  --header-bg: #ffffff;            /* Fondo de la cabecera (Blanco) */
-  --shadow-color: rgba(0, 0, 0, 0.08); /* Sombra suave actualizada */
-  --button-text-color: #ffffff;    /* Color de texto para botones primarios */
-  --button-secondary-bg: #ECF0F1;  /* Fondo botones secundarios */
-  --button-secondary-text: #6C757D;/* Texto botones secundarios */
-  --button-secondary-border: #DEE2E6;
-  --button-secondary-hover-bg: #DEE2E6;
+  /* Paleta Sugerida */
+  --background-primary: #F8F9FA;        /* Fondo principal muy claro */
+  --background-secondary: #ffffff;      /* Fondo de tarjetas, modales, inputs */
+  --sidebar-bg: #2C3E50;               /* Fondo Sidebar (Azul medianoche oscuro) */
+  --header-bg: #ffffff;                 /* Fondo Header (Blanco) */
+  --text-primary: #212529;              /* Texto principal (Casi negro) */
+  --text-secondary: #6C757D;            /* Texto secundario (Gris medio) */
+  --sidebar-text-color: #ECF0F1;        /* Texto en la sidebar (Gris claro) */
+  --border-color: #DEE2E6;              /* Bordes sutiles (Gris claro) */
+  --accent-color: #1ABC9C;              /* Acento principal (Teal) */
+  --accent-color-rgb: 26, 188, 156;     /* Versión RGB para rgba() */
+  --accent-color-darker: #16A085;       /* Teal más oscuro para hover */
+  --accent-color-light: rgba(26, 188, 156, 0.1); /* Teal muy claro/transparente para fondo activo sidebar */
+  --sidebar-active-bg: rgba(26, 188, 156, 0.15); /* Fondo para item activo en sidebar */
+  --shadow-color: rgba(44, 62, 80, 0.1); /* Sombra basada en azul oscuro */
+  --button-text-color: #ffffff;         /* Texto para botones primarios */
+  --button-secondary-bg: #ECF0F1;       /* Fondo botón secundario */
+  --button-secondary-text: #2C3E50;     /* Texto botón secundario */
+  --button-secondary-border: #CED4DA;   /* Borde botón secundario */
+  --button-secondary-hover-bg: #DEE2E6; /* Hover botón secundario */
+  --input-focus-border: #75cabb;        /* Borde input focus (Teal claro) */
+  --input-focus-shadow: rgba(26, 188, 156, 0.25); /* Sombra input focus */
 
-  /* Colores para el botón de tema */
-  --theme-button-bg: #e2e8f0;
-  --theme-button-hover-bg: #cbd5e1;
-  --theme-button-text: #334155;
+  /* Variables específicas botón tema (pueden heredar si prefieres) */
+  --theme-button-bg: #E9ECEF;
+  --theme-button-hover-bg: #CED4DA;
+  --theme-button-text: #495057;
+
+  /* Radios de borde */
+  --border-radius-sm: 0.25rem; /* 4px */
+  --border-radius-md: 0.5rem;  /* 8px */
+  --border-radius-lg: 1rem;   /* 16px */
+  --border-radius-pill: 50rem;
+  --border-radius-circle: 50%;
 }
 
-/* Modo Oscuro - Ajustado para coherencia */
+/* Modo Oscuro */
 :root[data-theme="dark"] {
-  --background-primary: #1e293b;   /* Fondo principal oscuro */
-  --background-secondary: #334155; /* Fondo de las tarjetas y modales */
-  --text-primary: #f1f5f9;         /* Texto principal claro */
-  --text-secondary: #94a3b8;       /* Texto secundario más oscuro */
-  --border-color: #475569;         /* Color de los bordes */
-  --accent-color: #2CE1B4;         /* Color de acento Teal más brillante para modo oscuro */
-  --accent-color-rgb: 44, 225, 180; /* RGB para #2CE1B4 */
-  --accent-color-darker: #1ABC9C;  /* Teal original como hover */
-  --sidebar-bg: #1A2433;           /* Sidebar un poco más oscuro que el fondo principal */
-  --sidebar-text-color: #cbd5e1;   /* Texto/Iconos en la barra lateral */
-  --sidebar-active-bg: rgba(44, 225, 180, 0.1); /* Fondo sutil para item activo */
-  --header-bg: #334155;            /* Fondo de la cabecera */
-  --shadow-color: rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
-  --button-text-color: #1e293b;    /* Texto oscuro para botones claros */
-  --button-secondary-bg: #475569;  /* Fondo botones secundarios */
-  --button-secondary-text: #f1f5f9;/* Texto botones secundarios */
-  --button-secondary-border: #64748b;
-  --button-secondary-hover-bg: #64748b;
+  --background-primary: #1e293b;        /* Azul muy oscuro */
+  --background-secondary: #334155;      /* Azul grisáceo oscuro */
+  --sidebar-bg: #0f172a;               /* Fondo Sidebar aún más oscuro */
+  --header-bg: #334155;                 /* Fondo Header */
+  --text-primary: #f1f5f9;              /* Texto principal (Casi blanco) */
+  --text-secondary: #94a3b8;            /* Texto secundario (Gris azulado claro) */
+  --sidebar-text-color: #cbd5e1;        /* Texto sidebar un poco más brillante */
+  --border-color: #475569;              /* Bordes (Gris azulado medio) */
+  --accent-color: #2CE1B4;              /* Acento principal (Teal más brillante) */
+  --accent-color-rgb: 44, 225, 180;     /* Versión RGB */
+  --accent-color-darker: #1ABC9C;       /* Teal original para hover */
+  --accent-color-light: rgba(44, 225, 180, 0.1); /* Teal brillante transparente */
+  --sidebar-active-bg: rgba(44, 225, 180, 0.15);/* Fondo item activo sidebar */
+  --shadow-color: rgba(0, 0, 0, 0.25);  /* Sombra más oscura */
+  --button-text-color: #0f172a;         /* Texto oscuro para botones claros */
+  --button-secondary-bg: #475569;       /* Fondo botón secundario */
+  --button-secondary-text: #f1f5f9;     /* Texto botón secundario */
+  --button-secondary-border: #64748b;   /* Borde botón secundario */
+  --button-secondary-hover-bg: #64748b; /* Hover botón secundario */
+  --input-focus-border: #4edcc0;        /* Borde input focus (Teal brillante claro) */
+  --input-focus-shadow: rgba(44, 225, 180, 0.3); /* Sombra input focus */
 
-  /* Colores específicos para el botón de tema en modo oscuro */
+  /* Variables botón tema oscuro */
   --theme-button-bg: #475569;
   --theme-button-hover-bg: #64748b;
   --theme-button-text: #f1f5f9;
 }
 
-/* Estilos generales que usan las variables */
+/* Estilos generales */
 body {
   background-color: var(--background-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Pila de fuentes moderna */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* Mejor renderizado de fuentes */
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- ESTILOS PARA EL BOTÓN DE CAMBIO DE TEMA --- */
+/* --- ESTILOS BOTÓN CAMBIO DE TEMA --- */
 .theme-toggle-button-header {
   background-color: var(--theme-button-bg);
   color: var(--theme-button-text);
   border: 1px solid var(--border-color);
   padding: 0;
-  font-size: 1.5rem;
-  border-radius: 50%;
+  font-size: 1.25rem; /* Ajustar tamaño icono si es necesario */
+  border-radius: var(--border-radius-circle);
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-  width: 40px;
-  height: 40px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 38px;
+  height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-left: 10px;
   line-height: 1;
-  box-shadow: 0 1px 3px var(--shadow-color);
+  /* box-shadow: 0 1px 2px var(--shadow-color); */ /* Sombra opcional */
 }
-
 .theme-toggle-button-header:hover {
   background-color: var(--theme-button-hover-bg);
 }
-
+.theme-toggle-button-header:focus-visible { /* Estilo de foco para accesibilidad */
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
 .theme-toggle-button-header #theme-icon {
   display: inline-block;
 }
 
-/* --- ESTILOS PARA BARRAS DE DESPLAZAMIENTO (SCROLLBARS) --- */
+/* --- ESTILOS SCROLLBARS --- */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--background-secondary);
+  background: var(--background-secondary); /* Usar fondo secundario para el track */
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb {
-  background-color: var(--text-secondary);
+  background-color: var(--border-color); /* Color del thumb (gris claro/oscuro) */
   border-radius: 4px;
-  border: 2px solid var(--background-secondary);
+  /* Quitar borde interno si se usa fondo secundario para track */
+  /* border: 2px solid var(--background-secondary); */
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--text-primary);
+  background-color: var(--text-secondary); /* Color más pronunciado al hacer hover */
 }
-
-/* Estilos específicos para Firefox */
+/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--text-secondary) var(--background-secondary); /* thumb track */
+  scrollbar-color: var(--border-color) var(--background-secondary); /* thumb track */
 }
 
-/* --- FIN ESTILOS SCROLLBARS --- */
+/* --- ESTILOS BASE REUTILIZABLES (Opcional, pero recomendado) --- */
 
-/* --- ESTILOS GLOBALES BASE --- */
-
-/* Estilo base para botones primarios */
-.button-primary {
-  background-color: var(--accent-color);
-  color: var(--button-text-color);
-  border: none;
-  border-radius: 6px;
-  padding: 0.7rem 1.4rem;
+/* Botones */
+.button { /* Clase base para todos los botones */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem; /* Ligeramente más pequeño */
   font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none; /* Asegurar que no haya subrayado si se usa en enlaces */
-  display: inline-block; /* Comportamiento adecuado */
+  line-height: 1.5;
   text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.button:focus-visible { /* Estilo de foco para accesibilidad */
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+.button svg { /* Espaciado si hay icono */
+    margin-right: 0.4rem;
+    vertical-align: middle; /* Alinear icono */
 }
 
+.button-primary {
+  color: var(--button-text-color);
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
 .button-primary:hover {
   background-color: var(--accent-color-darker);
-  transform: translateY(-1px);
+  border-color: var(--accent-color-darker);
 }
 
-.button-primary:active {
-  transform: translateY(0);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo base para botones secundarios */
 .button-secondary {
-  background-color: var(--button-secondary-bg);
   color: var(--button-secondary-text);
-  border: 1px solid var(--button-secondary-border);
-  border-radius: 6px;
-  padding: 0.7rem 1.4rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
+  background-color: var(--button-secondary-bg);
+  border-color: var(--button-secondary-border);
 }
-
 .button-secondary:hover {
   background-color: var(--button-secondary-hover-bg);
-  transform: translateY(-1px);
 }
 
-.button-secondary:active {
-   transform: translateY(0);
-   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos base para tarjetas */
+/* Tarjetas */
 .card {
   background-color: var(--background-secondary);
-  border-radius: 8px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px var(--shadow-color);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  margin-bottom: 1.5rem; /* Espacio debajo de cada tarjeta */
+  padding: 1.5rem; /* Espaciado interno */
+}
+.card-title {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
-/* Estilos base para inputs/selects */
+/* Campos de Formulario */
 input[type="text"],
-input[type="password"],
 input[type="email"],
-input[type="number"],
+input[type="password"],
 input[type="date"],
 input[type="time"],
+input[type="number"],
 select,
 textarea {
   display: block;
   width: 100%;
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--text-primary);
   background-color: var(--background-secondary);
   background-clip: padding-box;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  box-sizing: border-box;
+  appearance: none; /* Quitar estilos nativos */
+  border-radius: var(--border-radius-sm);
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  box-sizing: border-box; /* Asegurar que padding no aumente tamaño */
 }
-
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--accent-color);
+input:focus, select:focus, textarea:focus {
+  color: var(--text-primary);
+  background-color: var(--background-secondary);
+  border-color: var(--input-focus-border);
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(var(--accent-color-rgb), 0.25); /* Usar la variable RGB */
+  box-shadow: 0 0 0 0.25rem var(--input-focus-shadow);
+}
+textarea {
+    min-height: calc(1.5em + 1rem + 2px); /* Altura mínima para textareas */
+}
+select {
+    /* Añadir flecha personalizada para selects si se desea */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+:root[data-theme="dark"] select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
 
-/* --- FIN ESTILOS GLOBALES BASE --- */
+/* --- FIN ESTILOS BASE --- */
 

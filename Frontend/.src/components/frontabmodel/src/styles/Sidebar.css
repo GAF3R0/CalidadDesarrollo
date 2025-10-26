@@ -1,9 +1,14 @@
 /* Sidebar.css - ACTUALIZADO CON VARIABLES CSS */
 
 .app-sidebar {
+  /* --- CORRECCIÓN CLAVE AQUÍ --- */
+  /* Usamos background-card (blanco/claro en light mode) */
+  background: var(--background-card); 
+  /* Aseguramos que el shadow sea más sutil y use una variable correcta */
+  box-shadow: 2px 0 10px var(--shadow-color-subtle); 
+  /* Eliminamos la dependencia de --sidebar-bg y --shadow-color */
+
   width: 280px;
-  background: var(--sidebar-bg); /* Variable */
-  box-shadow: 2px 0 10px var(--shadow-color); /* Variable */
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -33,10 +38,9 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--accent-color); /* Variable - Mantenemos borde de acento */
-  /* Quitamos gradiente, usamos fondo secundario */
-  background: var(--background-secondary); /* Variable */
-  color: var(--accent-color); /* Variable - Usamos acento para el icono */
+  border: 3px solid var(--color-primary); /* Usamos color principal, no acento */
+  background: var(--background-page); /* Usamos page-background para el contenedor de la imagen */
+  color: var(--color-primary); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,8 +48,7 @@
   font-weight: bold;
 }
 .profile-image {
-   /* Fondo si no hay imagen, puede ser primario o secundario */
-   background: var(--background-primary); /* Variable */
+   background: var(--background-page); 
 }
 
 .hidden-file-input {
@@ -56,8 +59,8 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: var(--background-primary); /* Variable */
-  border: 2px solid var(--background-secondary); /* Variable - borde contra el fondo del avatar */
+  background-color: var(--color-primary); /* Usamos color principal para el badge */
+  border: 2px solid var(--background-card); /* Borde blanco para contraste */
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -66,16 +69,16 @@
   justify-content: center;
   cursor: pointer;
   font-size: 16px;
-  box-shadow: 0 2px 4px var(--shadow-color); /* Variable */
+  box-shadow: 0 2px 4px var(--shadow-color-subtle); /* Usar la variable de sombra sutil */
   transition: background-color 0.2s;
-  color: var(--text-secondary); /* Variable */
+  color: white; /* El ícono siempre blanco sobre fondo principal */
 }
 .upload-icon-label:hover {
-  background-color: var(--button-hover-bg); /* Variable - usar hover general? */
+  background-color: #0056b3; /* Tono más oscuro de azul en hover */
 }
-/* Ajuste hover en modo oscuro */
+/* Asegurar que el hover funciona en modo oscuro (no necesita cambiar) */
 :root[data-theme="dark"] .upload-icon-label:hover {
-    background-color: var(--background-primary);
+   background-color: #0056b3;
 }
 
 
@@ -83,15 +86,15 @@
   margin-top: 10px;
   padding: 6px 12px;
   font-size: 14px;
-  background-color: #28a745; /* Mantenemos verde específico */
-  color: white; /* Mantenemos blanco */
+  background-color: var(--color-accent); 
+  color: white; 
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 .upload-button:disabled {
-    background-color: var(--text-secondary); /* Variable */
-    opacity: 0.6;
+    background-color: var(--border-color); 
+    opacity: 0.8;
     cursor: not-allowed;
 }
 
@@ -99,7 +102,7 @@
 .sidebar-welcome-message {
   font-size: 16px;
   font-weight: bold;
-  color: var(--text-secondary); /* Variable */
+  color: var(--text-primary); /* Usamos text-primary para un texto oscuro que se ajusta */
   text-align: center;
   margin-top: 15px;
   margin-bottom: 5px;
@@ -115,9 +118,11 @@
 }
 
 .nav-link {
-  display: block;
+  display: flex; /* Para alinear el ícono si lo usa */
+  align-items: center;
+  gap: 10px; /* Espacio entre ícono y texto */
   padding: 14px 20px;
-  color: var(--text-secondary); /* Variable */
+  color: var(--text-primary); /* Usamos primary para el texto normal (negro en modo claro) */
   text-decoration: none;
   border-radius: 8px;
   font-size: 16px;
@@ -127,21 +132,36 @@
 }
 
 .nav-link:hover {
-  background-color: var(--background-primary); /* Variable */
-  color: var(--accent-color); /* Variable */
-  transform: translateX(3px);
+  background-color: var(--background-page); /* Usamos page-background para un hover sutil */
+  color: var(--color-primary); 
+  transform: translateX(0px); /* Quitamos el translateX para una interfaz más estable */
 }
 
-.nav-link.active {
-  background-color: var(--accent-color-light); /* Necesitamos una variable para azul claro o similar */
-  color: var(--accent-color); /* Variable */
+.nav-link.active { /* <--- ¡ESTE ES EL SELECTOR QUE DEBEMOS AJUSTAR! */
+  background-color: var(--sidebar-active-bg); /* O usa var(--accent-color-light) si prefieres un fondo más sutil */
+  color: var(--accent-color); /* Variable para el texto y el icono activo */
   font-weight: 600;
-  border-left: 4px solid var(--accent-color); /* Variable */
-  padding-left: 16px;
+  border-left: 4px solid var(--accent-color); /* Variable para el borde activo */
+  padding-left: 16px; /* Ajuste para compensar el borde */
 }
-/* Definir --accent-color-light en theme.css si no existe */
-/* :root { --accent-color-light: #e7f1ff; } */
-/* :root[data-theme="dark"] { --accent-color-light: rgba(96, 165, 250, 0.2); } */
+
+/* --- Estilos de Apoyo (Asumimos que estas variables están en theme.css o App.css) --- */
+/* Debes asegurarte de que estas variables estén definidas: */
+/*
+:root { 
+    --color-primary: #007bff;
+    --background-card: #ffffff; 
+    --background-page: #f8f9fa;
+    --text-primary: #343a40; 
+    --active-bg: #e7f1ff; 
+}
+.theme-dark {
+    --background-card: #34495e; 
+    --background-page: #2c3e50; 
+    --text-primary: #ffffff; 
+    --active-bg: rgba(96, 165, 250, 0.2); 
+}
+*/
 
 
 /* --- Fin Navegación --- */
@@ -149,7 +169,7 @@
 
 /* Divisor y Botón de Ocultar */
 .sidebar-divider {
-  border-top: 1px solid var(--border-color); /* Variable */
+  border-top: 1px solid var(--border-color); 
   padding-top: 15px;
   margin-top: auto;
   display: flex;
@@ -159,7 +179,7 @@
 .toggle-sidebar-btn {
   background: none;
   border: none;
-  color: var(--text-secondary); /* Variable */
+  color: var(--text-secondary); 
   cursor: pointer;
   font-size: 18px;
   padding: 8px;
@@ -173,6 +193,10 @@
 }
 
 .toggle-sidebar-btn:hover {
-  background: var(--background-primary); /* Variable */
-  color: var(--accent-color); /* Variable */
+  background: var(--background-page); 
+  color: var(--color-primary); 
 }
+
+/* --- RESPONSIVE --- */
+/* Si su aplicación es responsiva, asegúrese de que el ancho sea 100% en pantallas pequeñas, 
+   y que se oculte o cambie el layout en Layout.css o App.css */
