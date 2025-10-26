@@ -1,0 +1,50 @@
+/* theme.css */
+
+/* Este es el truco principal. 
+  Usamos variables CSS para definir nuestros colores.
+  Por defecto, aplicamos los colores del modo claro.
+*/
+:root {
+  --background-primary: #f4f7fa; /* Fondo principal claro */
+  --background-secondary: #ffffff; /* Fondo de las tarjetas y modales */
+  --text-primary: #1e293b;        /* Texto principal oscuro */
+  --text-secondary: #64748b;     /* Texto secundario más claro */
+  --border-color: #e2e8f0;       /* Color de los bordes */
+  --accent-color: #3b82f6;       /* Color de acento (botones, enlaces activos) */
+  --sidebar-bg: #ffffff;         /* Fondo de la barra lateral */
+  --header-bg: #ffffff;          /* Fondo de la cabecera */
+  --shadow-color: rgba(0, 0, 0, 0.05); /* Color de la sombra */
+}
+
+/* Cuando el contenedor principal tenga la clase 'dark-mode', 
+  sobrescribimos las variables con los colores del modo oscuro.
+*/
+.dark-mode {
+  --background-primary: #1e293b; /* Fondo principal oscuro */
+  --background-secondary: #334155; /* Fondo de las tarjetas y modales */
+  --text-primary: #f1f5f9;        /* Texto principal claro */
+  --text-secondary: #94a3b8;     /* Texto secundario más oscuro */
+  --border-color: #475569;       /* Color de los bordes */
+  --accent-color: #60a5fa;       /* Color de acento para modo oscuro */
+  --sidebar-bg: #334155;         /* Fondo de la barra lateral */
+  --header-bg: #334155;          /* Fondo de la cabecera */
+  --shadow-color: rgba(0, 0, 0, 0.2);  /* Sombra más pronunciada */
+}
+
+/* Ahora, en el resto de tus archivos CSS (App.css, Layout.css, etc.),
+  debes reemplazar los colores fijos (ej: background: #fff;) 
+  por estas variables (ej: background: var(--background-secondary);).
+  Esto hará que cambien automáticamente al cambiar de tema.
+  
+  Ejemplo de cómo deberías actualizar tus otros archivos CSS:
+  
+  .layout {
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+  }
+
+  .profile-card {
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-color);
+  }
+*/
