@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosClient';
 import '../styles/Pacientes.css';
 import { exportarPacientesPDF, exportarPacienteIndividualPDF } from '../utils/ExportarPDF';
 
@@ -22,8 +22,6 @@ const Pacientes = () => {
   const [formEditState, setFormEditState] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
   const [editFieldErrors, setEditFieldErrors] = useState({});
-
-  const API_URL = 'http://localhost:4001/api/pacientes';
 
   // --- VALIDACIONES ---
   const validaciones = {
@@ -104,7 +102,7 @@ const Pacientes = () => {
   const cargarPacientes = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(API_URL);
+      const response = await api.get('/pacientes');
       
       const listaPacientes = Array.isArray(response.data) ? response.data : [];
       setPacientes(listaPacientes);
@@ -207,7 +205,7 @@ const Pacientes = () => {
     }
 
     try {
-      await axios.post(API_URL, nuevoPaciente);
+      await api.post('/pacientes', nuevoPaciente);
 
       alert('¡Paciente registrado con éxito!');
       setNuevoPaciente({
@@ -236,7 +234,7 @@ const Pacientes = () => {
   const handleEliminar = async (idAEliminar) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este paciente?')) {
       try {
-        await axios.delete(`${API_URL}/${idAEliminar}`);
+        await api.delete(`/pacientes/${idAEliminar}`);
         alert('Paciente eliminado correctamente');
         cargarPacientes();
         setPacienteSeleccionado(null);
@@ -263,7 +261,7 @@ const Pacientes = () => {
     }
 
     try {
-      await axios.put(`${API_URL}/${pacienteSeleccionado.id_paciente}`, formEditState);
+      await api.put(`/pacientes/${pacienteSeleccionado.id_paciente}`, formEditState);
       alert('¡Paciente actualizado con éxito!');
       setPacienteSeleccionado(formEditState);
       setEditando(false);

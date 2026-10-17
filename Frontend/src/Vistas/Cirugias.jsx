@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../styles/Cirugias.css'; // Asegúrate de crear este archivo de estilos
+import api from '../api/axiosClient';
+import '../styles/Cirugias.css';
 
 // --- Constantes ---
-const API_BASE_URL = 'http://localhost:4001/api';
 // Estados fijos para el formulario
 const statusCirugia = ['Programada', 'En proceso', 'Completada', 'Cancelada'];
 
@@ -44,16 +43,14 @@ const Cirugias = () => {
   const cargarDatosIniciales = async () => {
     setLoading(true);
     setError('');
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
 
     try {
       // Cargamos todos los datos necesarios en paralelo
       const [resCirugias, resPacientes, resQuirofanos, resEquipos] = await Promise.all([
-        axios.get(`${API_BASE_URL}/cirugias`, { headers }),
-        axios.get(`${API_BASE_URL}/pacientes`, { headers }), // Asumiendo que esta ruta existe
-        axios.get(`${API_BASE_URL}/quirofanos`, { headers }),
-        axios.get(`${API_BASE_URL}/equipos/entradas`, { headers }) // Ruta corregida para el combobox
+        api.get('/cirugias'),
+        api.get('/pacientes'),
+        api.get('/quirofanos'),
+        api.get('/equipos/entradas')
       ]);
 
       setCirugias(resCirugias.data);
@@ -117,13 +114,10 @@ const Cirugias = () => {
   // CREAR
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
     setError('');
     try {
-      await axios.post(`${API_BASE_URL}/cirugias`, formState, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      await cargarDatosIniciales(); // Recargamos todo para obtener la vista detallada
+      await api.post('/cirugias', formState);
+      await cargarDatosIniciales();
       alert('¡Cirugía registrada con éxito!');
       closeAddModal();
     } catch (err) {
@@ -135,13 +129,10 @@ const Cirugias = () => {
   // ACTUALIZAR
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
     setError('');
     try {
-      await axios.put(`${API_BASE_URL}/cirugias/${selectedCirugia.id_cirugia}`, formState, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      await cargarDatosIniciales(); // Recargamos todo
+      await api.put(`/cirugias/${selectedCirugia.id_cirugia}`, formState);
+      await cargarDatosIniciales();
       alert('¡Cirugía actualizada con éxito!');
       closeEditModal();
     } catch (err) {
@@ -153,13 +144,10 @@ const Cirugias = () => {
   // ELIMINAR
   const handleDelete = async (id, pacienteNombre) => {
     if (window.confirm(`¿Eliminar cirugía de "${pacienteNombre}"?`)) {
-      const token = localStorage.getItem('token');
       setError('');
       try {
-        await axios.delete(`${API_BASE_URL}/cirugias/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setCirugias(prev => prev.filter(c => c.id_cirugia !== id)); // Elimina de la lista local
+        await api.delete(`/cirugias/${id}`);
+        setCirugias(prev => prev.filter(c => c.id_cirugia !== id));
         alert('Cirugía eliminada');
         if (selectedCirugia && selectedCirugia.id_cirugia === id) {
           closeDetailsModal();

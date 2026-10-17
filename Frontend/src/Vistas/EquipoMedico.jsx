@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../styles/EquipoMedico.css'; // Tus estilos bonitos
+import api from '../api/axiosClient';
+import '../styles/EquipoMedico.css';
 
 const EquipoMedico = () => {
   // --- ESTADOS ---
@@ -16,8 +16,6 @@ const EquipoMedico = () => {
   const [equipoSeleccionadoNombre, setEquipoSeleccionadoNombre] = useState(null); // Nombre del equipo en gestión
   const [gestionandoEspecialistas, setGestionandoEspecialistas] = useState(false); // Estado para la vista de gestión
 
-  const API_BASE_URL = 'http://localhost:4001/api';
-
   // --- CARGA INICIAL DE DATOS ---
   useEffect(() => {
     cargarDatosIniciales();
@@ -26,17 +24,10 @@ const EquipoMedico = () => {
   const cargarDatosIniciales = async () => {
     setLoading(true);
     setError('');
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setError('No autorizado. Por favor, inicie sesión.');
-      setLoading(false);
-      return;
-    }
-    const headers = { Authorization: `Bearer ${token}` };
     try {
       const [resEquipos, resEspecialistas] = await Promise.all([
-        axios.get(`${API_BASE_URL}/equipos`, { headers }),      // Obtiene nombres de equipos
-        axios.get(`${API_BASE_URL}/usuarios`, { headers })       // Obtiene todos los médicos
+        api.get('/equipos'),
+        api.get('/usuarios')
       ]);
       setEquipos(Array.isArray(resEquipos.data) ? resEquipos.data : []);
       setEspecialistasDisponibles(Array.isArray(resEspecialistas.data) ? resEspecialistas.data : []);
@@ -60,12 +51,11 @@ const EquipoMedico = () => {
       return;
     }
     setError('');
-    const token = localStorage.getItem('token');
     try {
-      const { data } = await axios.post(`${API_BASE_URL}/equipos`, {
+      const { data } = await api.post('/equipos', {
         nombre: formCrearState.nombreEquipo,
         id_medico: formCrearState.id_medico
-      }, { headers: { Authorization: `Bearer ${token}` } });
+      });
 
       if (!equipos.includes(formCrearState.nombreEquipo)) {
           setEquipos([...equipos, formCrearState.nombreEquipo]);
@@ -86,11 +76,8 @@ const EquipoMedico = () => {
     setEquipoSeleccionadoNombre(nombreEquipo);
     setGestionandoEspecialistas(true);
     setError('');
-    const token = localStorage.getItem('token');
     try {
-      const response = await axios.get(`${API_BASE_URL}/equipos/${encodeURIComponent(nombreEquipo)}`, {
-         headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/equipos/${encodeURIComponent(nombreEquipo)}`);
       setMiembrosEquipoActual(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       if (err.response?.status === 404) {
@@ -105,14 +92,12 @@ const EquipoMedico = () => {
 
   const handleAgregarEspecialista = async (idMedico) => {
     if (!equipoSeleccionadoNombre) return;
-    const token = localStorage.getItem('token');
     setError('');
     try {
-      await axios.post(`${API_BASE_URL}/equipos`, {
+      await api.post('/equipos', {
         nombre: equipoSeleccionadoNombre,
         id_medico: idMedico
-      }, { headers: { Authorization: `Bearer ${token}` } });
-      // Volver a cargar los miembros para reflejar el cambio
+      });
       handleGestionarEspecialistas(equipoSeleccionadoNombre);
     } catch (err) {
       setError(err.response?.data?.msg || 'Error al agregar especialista.');
@@ -122,12 +107,9 @@ const EquipoMedico = () => {
   const handleEliminarEspecialista = async (idEntradaEquipo) => {
     if (!equipoSeleccionadoNombre) return;
     if (window.confirm('¿Quitar a este especialista del equipo?')) {
-      const token = localStorage.getItem('token');
       setError('');
       try {
-        await axios.delete(`${API_BASE_URL}/equipos/miembros/${idEntradaEquipo}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.delete(`/equipos/miembros/${idEntradaEquipo}`);
         handleGestionarEspecialistas(equipoSeleccionadoNombre);
       } catch (err) {
         setError(err.response?.data?.msg || 'Error al eliminar especialista.');
@@ -138,12 +120,9 @@ const EquipoMedico = () => {
   const handleEliminarEquipoCompleto = async (e, nombreEquipo) => {
        e.stopPropagation(); // Evita que se seleccione el equipo al hacer clic en eliminar
        if (window.confirm(`¿Está seguro de eliminar el equipo "${nombreEquipo}" completo?`)) {
-          const token = localStorage.getItem('token');
           setError('');
           try {
-             await axios.delete(`${API_BASE_URL}/equipos/${encodeURIComponent(nombreEquipo)}`, {
-                 headers: { Authorization: `Bearer ${token}` }
-             });
+             await api.delete(`/equipos/${encodeURIComponent(nombreEquipo)}`);
              setEquipos(equipos.filter(nombre => nombre !== nombreEquipo));
              alert(`Equipo "${nombreEquipo}" eliminado.`);
           } catch (err) {

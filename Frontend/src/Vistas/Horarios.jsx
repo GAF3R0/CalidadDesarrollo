@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosClient';
 import EmergenciaModal from './EmergenciaModal';
 import '../styles/Horarios.css';
 
 // Versión SIN roles, Click muestra Detalles, 5 Estados
 const Horarios = () => {
-  const API_BASE_QUIROFANOS = 'http://localhost:4001/api/quirofano';
 
   // --- ESTADOS PARA MODALES ---
   const [showEmergenciaModal, setShowEmergenciaModal] = useState(false);
@@ -77,7 +76,7 @@ const Horarios = () => {
 
   const cargarQuirofanos = async () => {
     try {
-      const response = await axios.get(API_BASE_QUIROFANOS);
+      const response = await api.get('/quirofanos');
       setQuirofanos(response.data);
     } catch (err) {
       console.error('Error al cargar quirófanos:', err);
@@ -172,7 +171,7 @@ const Horarios = () => {
     }
     
     try {
-      const response = await axios.post(API_BASE_QUIROFANOS, nuevoQuirofano);
+      const response = await api.post('/quirofanos', nuevoQuirofano);
       setQuirofanos([...quirofanos, response.data]);
       setNuevoQuirofano({ sala: '', estado: 'disponible' });
       alert('✅ Quirófano agregado correctamente');
@@ -199,7 +198,7 @@ const Horarios = () => {
     }
     
     try {
-      await axios.put(`${API_BASE_QUIROFANOS}/${sala}`, { estado: nuevoEstado });
+      await api.put(`/quirofanos/${sala}`, { estado: nuevoEstado });
       
       setQuirofanos(prevQuirofanos => 
         prevQuirofanos.map(q => 
@@ -222,7 +221,7 @@ const Horarios = () => {
     
     if (window.confirm(`¿Estás seguro de eliminar el quirófano "${sala}"?`)) { 
       try {
-        await axios.delete(`${API_BASE_QUIROFANOS}/${sala}`);
+        await api.delete(`/quirofanos/${sala}`);
         setQuirofanos(quirofanos.filter(q => q.sala !== sala));
         alert('✅ Quirófano eliminado correctamente');
       } catch (err) {

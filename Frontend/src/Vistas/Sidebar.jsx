@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axiosClient';
 import '../styles/Sidebar.css';
 import { NavLink } from 'react-router-dom';
+
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:4001';
 
 const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
   const [archivo, setArchivo] = useState(null);
@@ -16,10 +18,8 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setArchivo(e.target.files[0]);
-      
-      // Vista previa inmediata - crear URL temporal para el archivo seleccionado
       const urlTemporal = URL.createObjectURL(e.target.files[0]);
-      setFotoActual(urlTemporal); // Mostrar la imagen seleccionada inmediatamente
+      setFotoActual(urlTemporal);
     }
   };
 
@@ -31,37 +31,27 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
     setSubiendo(true);
     const formData = new FormData();
     formData.append('fotoPerfil', archivo);
+
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put('http://localhost:4001/api/usuarios/perfil/foto', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
-        }
+      const response = await api.put('/usuarios/perfil/foto', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
-      
-      alert('¡Foto de perfil actualizada!');
-      
-      // ACTUALIZAR CON LA FOTO REAL DEL SERVIDOR
+
+      alert('¡Foto de perfil actualizada exitosamente!');
+
       if (response.data && response.data.foto_perfil) {
-        const nuevaFotoUrl = `http://localhost:4001/${response.data.foto_perfil.replace(/\\/g, '/')}`;
+        const nuevaFotoUrl = `${SERVER_BASE_URL}/${response.data.foto_perfil.replace(/\\/g, '/')}`;
         setFotoActual(nuevaFotoUrl);
-        
-        // Limpiar la URL temporal si existe
-        if (archivo) {
+        if (archivo && fotoActual?.startsWith('blob:')) {
           URL.revokeObjectURL(fotoActual);
         }
       }
-      
-      // Notificar al componente padre
+
       if (onProfileUpdate) onProfileUpdate();
-      
     } catch (error) {
       console.error('Error al subir la foto:', error.response?.data || error.message);
-      alert('Error al subir la foto. Verifica la consola.');
-      
-      // Revertir a la foto original si hay error
-      setFotoActual(user?.foto_perfil ? `http://localhost:4001/${user.foto_perfil.replace(/\\/g, '/')}` : null);
+      alert(error.response?.data?.msg || 'Error al subir la foto. Verifica que sea una imagen válida menor a 3MB.');
+      setFotoActual(user?.foto_perfil ? `${SERVER_BASE_URL}/${user.foto_perfil.replace(/\\/g, '/')}` : null);
     } finally {
       setSubiendo(false);
       setArchivo(null);
@@ -70,11 +60,10 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
     }
   };
 
-  // Construir la URL de la imagen
-  const imageUrl = fotoActual 
-    ? (fotoActual.startsWith('blob:') 
-        ? fotoActual // Es una URL temporal
-        : `http://localhost:4001/${fotoActual.replace(/\\/g, '/')}`) // Es la ruta del servidor
+  const imageUrl = fotoActual
+    ? (fotoActual.startsWith('blob:')
+        ? fotoActual
+        : `${SERVER_BASE_URL}/${fotoActual.replace(/\\/g, '/')}`)
     : null;
 
   const inicial = user?.nombre ? user.nombre.charAt(0).toUpperCase() : '?';
@@ -87,32 +76,31 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
     <aside className="app-sidebar">
       {/* Perfil */}
       <div className="profile">
-        {/* Contenedor Imagen y Botón Subir */}
         <div className="profile-image-container">
           {imageUrl ? (
-            <img 
-              src={imageUrl} 
-              alt="Foto de perfil" 
-              className="profile-image" 
-              key={imageUrl} // Forzar re-render cuando cambie la URL
-              onError={(e) => { 
-                e.target.onerror = null; 
-                e.target.src = '/path/to/default/avatar.png'; 
-              }} 
+            <img
+              src={imageUrl}
+              alt="Foto de perfil"
+              className="profile-image"
+              key={imageUrl}
+              onError={(e) => {
+                e.target.onerror = null;
+                setFotoActual(null);
+              }}
             />
           ) : (
             <div className="profile-icon">{inicial}</div>
           )}
           <label htmlFor="file-upload" className="upload-icon-label" title="Cambiar foto">📷</label>
           <input
-            id="file-upload" 
-            type="file" 
+            id="file-upload"
+            type="file"
             className="hidden-file-input"
-            onChange={handleFileChange} 
+            onChange={handleFileChange}
             accept="image/*"
           />
         </div>
-        {/* Botón confirmar foto */}
+
         {archivo && (
           <button onClick={handleImageUpload} className="upload-button" disabled={subiendo}>
             {subiendo ? 'Subiendo...' : 'Confirmar Foto'}
@@ -122,7 +110,6 @@ const Sidebar = ({ user, onProfileUpdate, onToggle }) => {
         <h2 className="sidebar-welcome-message">BIENVENIDO</h2>
       </div>
 
-      {/* Resto del código igual... */}
       <nav className="sidebar-nav">
         {isAdmin && (
           <>

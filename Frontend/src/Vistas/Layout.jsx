@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import { useAuth } from '../context/AuthContext';
 import '../styles/Layout.css';
 
-const Layout = ({ user, onLogout }) => {
+const Layout = () => {
+  const { user, logout, refreshUser } = useAuth();
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const toggleSidebar = () => {
@@ -13,17 +15,17 @@ const Layout = ({ user, onLogout }) => {
 
   return (
     <div className="layout">
-      <Header user={user} onLogout={onLogout} />
+      <Header user={user} onLogout={logout} />
       <div className="layout-body">
         {sidebarVisible && (
-          <Sidebar user={user} onLogout={onLogout} onToggle={toggleSidebar} />
+          <Sidebar user={user} onProfileUpdate={refreshUser} onToggle={toggleSidebar} />
         )}
         <main className={`layout-content ${!sidebarVisible ? 'expanded' : ''}`}>
-          {/* Botón para mostrar sidebar cuando está oculto */}
           {!sidebarVisible && (
             <button 
               className="show-sidebar-btn"
               onClick={toggleSidebar}
+              title="Mostrar menú lateral"
             >
               ☰
             </button>

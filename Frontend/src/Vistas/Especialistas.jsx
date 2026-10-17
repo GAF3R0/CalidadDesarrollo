@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosClient';
 import '../styles/Especialistas.css';
-// Eliminado: import { useEffect } from 'react'; // Ya estaba importado arriba
 
 const Especialistas = () => {
 
@@ -29,8 +28,6 @@ const Especialistas = () => {
     id_especialidad: '',
     password: ''
   });
-
-  const API_BASE_URL = 'http://localhost:4001/api';
 
   // --- VALIDACIONES ---
   const validaciones = {
@@ -96,13 +93,11 @@ const Especialistas = () => {
   // --- CARGA DE DATOS INICIAL ---
   const cargarDatos = async (mostrarAlerta = false) => {
     setLoading(true);
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
     try {
       const [resMedicos, resRoles, resEspecialidades] = await Promise.all([
-        axios.get(`${API_BASE_URL}/usuarios`, { headers }),
-        axios.get(`${API_BASE_URL}/roles`, { headers }),
-        axios.get(`${API_BASE_URL}/especialidades`, { headers })
+        api.get('/usuarios'),
+        api.get('/roles'),
+        api.get('/especialidades')
       ]);
       setMedicos(resMedicos.data);
       setRoles(resRoles.data);
@@ -181,8 +176,6 @@ const Especialistas = () => {
     }
     setError(''); // Limpia error previo si la validación pasa
 
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
     const dataToSend = { ...formState };
     // No enviar password vacío al editar
     if (isEditing && !dataToSend.password.trim()) {
@@ -191,15 +184,13 @@ const Especialistas = () => {
 
     try {
       if (isEditing) {
-        const response = await axios.put(`${API_BASE_URL}/usuarios/${isEditing}`, dataToSend, { headers });
-        // Actualizar solo el médico editado en el estado local
+        const response = await api.put(`/usuarios/${isEditing}`, dataToSend);
         setMedicos(medicos.map(medico =>
           medico.id_medicos === isEditing ? response.data.medico : medico
         ));
         alert('¡Especialista actualizado con éxito!');
       } else {
-        const response = await axios.post(`${API_BASE_URL}/usuarios`, dataToSend, { headers });
-        // Agregar el nuevo médico al estado local
+        const response = await api.post('/usuarios', dataToSend);
         setMedicos([...medicos, response.data.medico]);
         alert('¡Especialista registrado con éxito!');
       }
@@ -229,15 +220,11 @@ const Especialistas = () => {
 
   const handleEliminar = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar a este especialista?')) {
-      setError(''); // Limpiar error previo
+      setError('');
       try {
-        const token = localStorage.getItem('token');
-        await axios.delete(`${API_BASE_URL}/usuarios/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.delete(`/usuarios/${id}`);
         setMedicos(medicos.filter(esp => esp.id_medicos !== id));
         alert('Especialista eliminado con éxito.');
-        // Si estábamos editando al que se eliminó, resetear form
         if (isEditing === id) resetForm();
       } catch (err) {
         setError(err.response?.data?.msg || 'Error al eliminar el especialista.');
@@ -271,14 +258,12 @@ const Especialistas = () => {
     }
 
     const endpoint = gestionTipo === 'roles' ? '/roles' : '/especialidades';
-    const data = { descripcion: nuevoItemNombre.trim() }; // El backend espera 'descripcion'
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
+    const data = { descripcion: nuevoItemNombre.trim() };
 
     try {
-      await axios.post(`${API_BASE_URL}${endpoint}`, data, { headers });
-      setNuevoItemNombre(''); // Limpiar input
-      await cargarDatos(true); // Recargar roles y especialidades y mostrar alerta
+      await api.post(endpoint, data);
+      setNuevoItemNombre('');
+      await cargarDatos(true);
     } catch (err) {
       alert(`Error al agregar ${gestionTipo === 'roles' ? 'rol' : 'especialidad'}: ` + (err.response?.data?.msg || err.message));
       console.error("Error en agregarNuevoItem:", err.response || err);
@@ -293,12 +278,10 @@ const Especialistas = () => {
     if (!window.confirm(`¿Seguro que quieres eliminar "${itemNombre}"?`)) return;
 
     const endpoint = gestionTipo === 'roles' ? `/roles/${id}` : `/especialidades/${id}`;
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
 
     try {
-      await axios.delete(`${API_BASE_URL}${endpoint}`, { headers });
-      await cargarDatos(true); // Recargar y mostrar alerta
+      await api.delete(endpoint);
+      await cargarDatos(true);
     } catch (err) {
       alert(`Error al eliminar: ` + (err.response?.data?.msg || err.message));
       console.error("Error en eliminarItem:", err.response || err);
