@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-// Se importan ambas funciones del middleware
-const { protegerRuta, verificarRol } = require('../middleware/authMiddleware');
+const { protegerRuta } = require('../middleware/authMiddleware');
+const { authLimiter } = require('../middleware/rateLimitMiddleware');
 
-router.post('/login', authController.login);
+router.post('/login', authLimiter, authController.login);
 
-// Corregimos 'Especialista' a 'Espacialista' para que coincida con tus datos
-router.get('/me', protegerRuta, verificarRol(['Administrador', 'Especialista']), authController.obtenerPerfil);
+// Permite a cualquier usuario autenticado consultar su propio perfil
+router.get('/me', protegerRuta, authController.obtenerPerfil);
 module.exports = router;

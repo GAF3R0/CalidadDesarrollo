@@ -34,11 +34,10 @@ router.put(
 
     equipoMedicoController.actualizarMiembroEquipo
 );
-
 router.delete(
     '/:nombre', 
     protegerRuta, 
-
+    verificarRol(['Administrador']),
     equipoMedicoController.eliminarEquipo
 );
 

@@ -21,6 +21,6 @@ router.put(
     usuarioController.subirFotoPerfil
 );
 
-router.get('/especialistas', usuarioController.obtenerEspecialistas);
+router.get('/especialistas', protegerRuta, usuarioController.obtenerEspecialistas);
 
 module.exports = router;

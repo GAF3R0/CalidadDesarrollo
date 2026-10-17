@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const quirofanoController = require('../controllers/quirofanoController');
+const { protegerRuta, verificarRol } = require('../middleware/authMiddleware');
 
-router.get('/', quirofanoController.mostrarquirofano);
-router.post('/', quirofanoController.nuevoquirofano);
-router.put('/:sala', quirofanoController.actualizarquirofano);
-router.delete('/:sala', quirofanoController.eliminarquirofano);
+router.get('/', protegerRuta, quirofanoController.mostrarquirofano);
+router.post('/', protegerRuta, verificarRol(['Administrador']), quirofanoController.nuevoquirofano);
+router.put('/:sala', protegerRuta, quirofanoController.actualizarquirofano);
+router.delete('/:sala', protegerRuta, verificarRol(['Administrador']), quirofanoController.eliminarquirofano);
 
 module.exports = router;

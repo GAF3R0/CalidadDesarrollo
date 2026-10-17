@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const pacienteController = require('../controllers/pacienteController');
+const { protegerRuta, verificarRol } = require('../middleware/authMiddleware');
 
-router.post('/', pacienteController.crearPaciente);
-router.get('/', pacienteController.mostrarPaciente);
-router.put('/:id', pacienteController.actualizarPaciente);
-router.delete('/:id', pacienteController.eliminarPaciente);
+// Rutas protegidas para personal médico autorizado
+router.get('/', protegerRuta, pacienteController.mostrarPaciente);
+router.post('/', protegerRuta, pacienteController.crearPaciente);
+router.put('/:id', protegerRuta, pacienteController.actualizarPaciente);
+
+// Eliminación restringida únicamente a Administradores
+router.delete('/:id', protegerRuta, verificarRol(['Administrador']), pacienteController.eliminarPaciente);
 
 module.exports = router;

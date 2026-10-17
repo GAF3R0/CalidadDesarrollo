@@ -32,6 +32,7 @@ router.put(
 router.delete(
     '/:id', 
     protegerRuta, 
+    verificarRol(['Administrador']),
     cirugiaController.eliminarCirugia
 );
 

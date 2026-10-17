@@ -59,7 +59,7 @@ const Cirugia = {
       FROM cirugias ci 
       LEFT JOIN expedientes ex ON ci.id_expediente = ex.id_expediente
       LEFT JOIN pacientes p ON ex.id_paciente = p.id_paciente
-      LEFT JOIN quirofanos q ON ci."id_quirófano" = q.id_quirofano -- Asegúrate que el nombre de columna id_quirofano sea correcto
+      LEFT JOIN quirofanos q ON ci."id_quirófano" = q."id_quirófano"
       LEFT JOIN equipo_medico eq ON ci.id_equipomedico = eq.id_equipomedico
       ORDER BY ci.fecha DESC, ci.id_cirugia DESC;
     `;
