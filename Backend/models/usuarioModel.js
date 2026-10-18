@@ -9,7 +9,7 @@ const Usuario = {
         r.descripcion AS role -- Usamos el alias 'role'
       FROM medicos_usuarios mu 
       LEFT JOIN roles r ON mu.id_rol = r.id_rol 
-      WHERE mu.cedula_profecional = $1
+      WHERE LOWER(TRIM(mu.cedula_profecional)) = LOWER(TRIM($1))
     `;
     try {
       const { rows } = await pool.query(query, [cedula]);
