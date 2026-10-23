@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log*
+.env
+.env.*
+!.env.example
+.git
+*.md
+.vscode
+.idea
+Thumbs.db
+.DS_Store

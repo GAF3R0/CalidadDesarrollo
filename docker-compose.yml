@@ -1,0 +1,75 @@
+# ============================================
+# Docker Compose — ADMODEL (Full Stack)
+# Backend + Frontend + PostgreSQL
+# ============================================
+
+services:
+  # ---- Base de Datos PostgreSQL ----
+  db:
+    image: postgres:17-alpine
+    container_name: admodel-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Fernando1604
+      POSTGRES_DB: Gestion
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persistencia de datos (no se pierden al recrear el contenedor)
+      - pgdata:/var/lib/postgresql/data
+      # Script de inicialización automática de la BD
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Gestion"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ---- Backend (Node.js / Express) ----
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: admodel-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 4001
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: Fernando1604
+      DB_NAME: Gestion
+      DB_DATABASE: Gestion
+      DB_PORT: 5432
+      NODE_ENV: production
+      FRONTEND_URL: http://localhost
+      JWT_SECRET: se_supone_que_esto_tiene_que_ser_muy_largo
+    ports:
+      - "4001:4001"
+    volumes:
+      # Persistir fotos de perfil y otros uploads
+      - backend_uploads:/app/uploads
+
+  # ---- Frontend (React / Vite + Nginx) ----
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        # Variable de entorno inyectada en build-time para Vite
+        VITE_API_URL: /api
+    container_name: admodel-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  pgdata:
+    driver: local
+  backend_uploads:
+    driver: local
