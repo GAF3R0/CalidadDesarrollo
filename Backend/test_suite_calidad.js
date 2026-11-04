@@ -21,6 +21,8 @@ const bcrypt = require('bcryptjs');
 
 const API_PORT = process.env.PORT || 4001;
 const BASE_URL = `http://localhost:${API_PORT}/api`;
+const TEST_LOGIN_CEDULA = process.env.TEST_LOGIN_CEDULA;
+const TEST_LOGIN_PASSWORD = process.env.TEST_LOGIN_PASSWORD;
 
 let passCount = 0;
 let failCount = 0;
@@ -36,6 +38,10 @@ function assert(condition, testName) {
 }
 
 async function runTests() {
+  if (!TEST_LOGIN_CEDULA || !TEST_LOGIN_PASSWORD) {
+    throw new Error('Configura TEST_LOGIN_CEDULA y TEST_LOGIN_PASSWORD en el entorno local.');
+  }
+
   console.log('\n============================================================');
   console.log('🩺 INICIANDO BATERÍA DE PRUEBAS AUTOMATIZADAS DE CALIDAD');
   console.log('============================================================\n');
@@ -51,8 +57,8 @@ async function runTests() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        cedula: '  123456789  ',
-        password: 'PasswordParaErick123'
+        cedula: `  ${TEST_LOGIN_CEDULA}  `,
+        password: TEST_LOGIN_PASSWORD
       })
     });
     const dataLogin = await resLogin.json();
@@ -64,7 +70,7 @@ async function runTests() {
       headers: { 'Authorization': `Bearer ${tokenAdmin}` }
     });
     const dataMe = await resMe.json();
-    assert(resMe.status === 200 && dataMe.nombre.includes('Carlos'), 'Ruta protegida /auth/me retorna perfil de médico');
+    assert(resMe.status === 200 && !!dataMe.nombre, 'Ruta protegida /auth/me retorna perfil de médico');
   } catch (err) {
     assert(false, `Error en login: ${err.message}`);
   }
@@ -77,7 +83,7 @@ async function runTests() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        cedula: '123456789',
+        cedula: TEST_LOGIN_CEDULA,
         password: 'PasswordIncorrecta'
       })
     });

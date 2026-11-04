@@ -5,9 +5,12 @@ const path = require('path');
 require('dotenv').config();
 
 const { apiLimiter } = require('./middleware/rateLimitMiddleware');
+const { validateCryptoConfiguration } = require('./utils/cryptoService');
 
 const app = express();
 const PORT = process.env.PORT || 4001;
+
+validateCryptoConfiguration();
 
 // 1. Cabeceras de seguridad HTTP con Helmet
 app.use(

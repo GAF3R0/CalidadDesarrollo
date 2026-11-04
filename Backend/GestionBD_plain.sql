@@ -448,7 +448,7 @@ CREATE TABLE public.expedientes (
     id_paciente integer,
     numero_expediente character varying(50),
     fecha_ingreso date,
-    procedencia character varying(100),
+    procedencia text,
     creado_en timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     actualizado_en timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     creado_por character varying(50),
@@ -1220,4 +1220,3 @@ ALTER TABLE ONLY public.medicos_usuarios
 --
 -- PostgreSQL database dump complete
 --
-

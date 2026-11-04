@@ -1,4 +1,10 @@
 const pool = require('../config/db');
+const { encryptSensitiveData, decryptSensitiveData } = require('../utils/cryptoService');
+
+const decryptPaciente = (paciente) => ({
+  ...paciente,
+  procedencia: decryptSensitiveData(paciente.procedencia)
+});
 
 const Paciente = {
   /**
@@ -26,7 +32,7 @@ const Paciente = {
         RETURNING id_expediente, numero_expediente, procedencia
       `;
       const resultExpediente = await client.query(queryExpediente, [
-        nuevoPaciente.id_paciente, numero_expediente, procedencia || null
+        nuevoPaciente.id_paciente, numero_expediente, encryptSensitiveData(procedencia || null)
       ]);
 
       await client.query('COMMIT');
@@ -36,7 +42,8 @@ const Paciente = {
         id_expediente: resultExpediente.rows[0].id_expediente,
         paciente: {
           ...nuevoPaciente,
-          ...resultExpediente.rows[0]
+          ...resultExpediente.rows[0],
+          procedencia: decryptSensitiveData(resultExpediente.rows[0].procedencia)
         }
       };
     } catch (error) {
@@ -70,7 +77,7 @@ const Paciente = {
     `;
     try {
       const result = await pool.query(query);
-      return result.rows;
+      return result.rows.map(decryptPaciente);
     } catch (error) {
       console.error('Error al obtener lista de pacientes:', error);
       throw error;
@@ -98,7 +105,7 @@ const Paciente = {
     `;
     try {
       const result = await pool.query(query, [id_paciente]);
-      return result.rows[0] || null;
+      return result.rows[0] ? decryptPaciente(result.rows[0]) : null;
     } catch (error) {
       console.error(`Error al buscar paciente con ID ${id_paciente}:`, error);
       throw error;
@@ -135,7 +142,7 @@ const Paciente = {
         RETURNING *
       `;
       await client.query(queryExpediente, [
-        datos.numero_expediente, datos.procedencia || null, id_paciente
+        datos.numero_expediente, encryptSensitiveData(datos.procedencia || null), id_paciente
       ]);
 
       await client.query('COMMIT');

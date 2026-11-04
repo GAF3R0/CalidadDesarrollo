@@ -1,21 +1,17 @@
 const Usuario = require('../models/usuarioModel');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { signToken } = require('../utils/cryptoService');
 
 exports.login = async (req, res) => {
   const { cedula, password } = req.body;
 
   try {
     const user = await Usuario.findByCedula(cedula);
-    console.log('2. Resultado de la búsqueda en BD:', user);
-
     if (!user || !user.password) {
       return res.status(401).json({ msg: 'Cédula o contraseña incorrectas' });
     }
 
     const passCorrecto = await bcrypt.compare(password, user.password);
-    console.log('3. ¿Contraseña correcta?:', passCorrecto);
-
     if (!passCorrecto) {
       return res.status(401).json({ msg: 'Cédula o contraseña incorrectas' });
     }
@@ -26,14 +22,9 @@ exports.login = async (req, res) => {
         role: user.role
       }
     };
-    console.log('4. Payload para el token creado:', payload);
-
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '8h' });
-    console.log('5. Token generado con éxito.');
+    const token = signToken(payload);
     
     res.status(200).json({ token });
-    console.log('✅ Respuesta 200 OK enviada al frontend.');
-
   } catch (error) {
     console.error('💥 ERROR INESPERADO EN EL LOGIN:', error);
     res.status(500).json({ msg: 'Error en el servidor' });
@@ -56,7 +47,7 @@ exports.obtenerPerfil = async (req, res) => {
  
 
   } catch (error) {
-
+    console.error('Error al obtener el perfil:', error);
     res.status(500).json({ msg: 'Error en el servidor' });
   }
 };

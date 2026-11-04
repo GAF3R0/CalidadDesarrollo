@@ -6,12 +6,14 @@
 services:
   # ---- Base de Datos PostgreSQL ----
   db:
+    profiles:
+      - docker-db
     image: postgres:17-alpine
     container_name: admodel-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Fernando1604
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the project .env file}
       POSTGRES_DB: Gestion
     ports:
       - "5432:5432"
@@ -33,25 +35,26 @@ services:
       dockerfile: Dockerfile
     container_name: admodel-backend
     restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
       PORT: 4001
-      DB_HOST: db
+      DB_HOST: ${DB_HOST:-host.docker.internal}
       DB_USER: postgres
-      DB_PASSWORD: Fernando1604
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the project .env file}
       DB_NAME: Gestion
       DB_DATABASE: Gestion
       DB_PORT: 5432
       NODE_ENV: production
       FRONTEND_URL: http://localhost
-      JWT_SECRET: se_supone_que_esto_tiene_que_ser_muy_largo
+      ENCRYPTION_KEY_PATH: /run/secrets/crypto/encryption.key
+      JWT_PRIVATE_KEY_PATH: /run/secrets/crypto/jwt-private.pem
+      JWT_PUBLIC_KEY_PATH: /run/secrets/crypto/jwt-public.pem
     ports:
       - "4001:4001"
     volumes:
       # Persistir fotos de perfil y otros uploads
       - backend_uploads:/app/uploads
+      # Llaves fuera de la imagen y montadas en solo lectura
+      - ./Backend/keys:/run/secrets/crypto:ro
 
   # ---- Frontend (React / Vite + Nginx) ----
   frontend:

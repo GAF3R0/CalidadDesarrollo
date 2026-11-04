@@ -37,3 +37,6 @@ desktop.ini
 # Uploaded files
 Backend/uploads/*
 !Backend/uploads/.gitkeep
+
+# Local cryptographic keys
+Backend/keys/

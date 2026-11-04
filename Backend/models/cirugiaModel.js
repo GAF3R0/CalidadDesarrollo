@@ -1,4 +1,14 @@
 const pool = require('../config/db');
+const { encryptSensitiveData, decryptSensitiveData } = require('../utils/cryptoService');
+
+const decryptDiagnosticos = (cirugia) => {
+  if (!cirugia) return cirugia;
+  return {
+    ...cirugia,
+    diagnostico_pre: decryptSensitiveData(cirugia.diagnostico_pre),
+    diagnostico_post: decryptSensitiveData(cirugia.diagnostico_post)
+  };
+};
 
 const Cirugia = {
   /**
@@ -60,9 +70,9 @@ const Cirugia = {
         RETURNING *
       `;
       const valuesCirugia = [
-        id_expediente, fechaCirugia, diagnostico_pre, procedimiento,
+        id_expediente, fechaCirugia, encryptSensitiveData(diagnostico_pre), procedimiento,
         id_quirófano, id_equipomedico, estado || 'Programada',
-        diagnostico_post, resultado, creado_por || 'sistema'
+        encryptSensitiveData(diagnostico_post), resultado, creado_por || 'sistema'
       ];
 
       const { rows } = await client.query(queryCirugia, valuesCirugia);
@@ -86,7 +96,7 @@ const Cirugia = {
       }
 
       await client.query('COMMIT');
-      return nuevaCirugia;
+      return decryptDiagnosticos(nuevaCirugia);
     } catch (error) {
       await client.query('ROLLBACK');
       console.error('Error al insertar cirugía en el modelo con transacción:', error);
@@ -132,7 +142,7 @@ const Cirugia = {
     `;
     try {
       const { rows } = await pool.query(query);
-      return rows;
+      return rows.map(decryptDiagnosticos);
     } catch (error) {
       console.error('Error al obtener cirugías detalladas:', error);
       throw error;
@@ -155,7 +165,7 @@ const Cirugia = {
     `;
     try {
       const { rows } = await pool.query(query, [id]);
-      return rows[0];
+      return decryptDiagnosticos(rows[0]);
     } catch (error) {
       console.error(`Error al buscar cirugía con ID ${id}:`, error);
       throw error;
@@ -183,12 +193,12 @@ const Cirugia = {
       let queryIndex = 1;
 
       if (fechaCirugia !== undefined) { fields.push(`fecha = $${queryIndex++}`); values.push(fechaCirugia); }
-      if (diagnostico_pre !== undefined) { fields.push(`diagnostico_pre = $${queryIndex++}`); values.push(diagnostico_pre); }
+      if (diagnostico_pre !== undefined) { fields.push(`diagnostico_pre = $${queryIndex++}`); values.push(encryptSensitiveData(diagnostico_pre)); }
       if (procedimiento !== undefined) { fields.push(`procedimiento = $${queryIndex++}`); values.push(procedimiento); }
       if (id_quirófano !== undefined) { fields.push(`"id_quirófano" = $${queryIndex++}`); values.push(id_quirófano); }
       if (id_equipomedico !== undefined) { fields.push(`id_equipomedico = $${queryIndex++}`); values.push(id_equipomedico); }
       if (estado !== undefined) { fields.push(`estado = $${queryIndex++}`); values.push(estado); }
-      if (diagnostico_post !== undefined) { fields.push(`diagnostico_post = $${queryIndex++}`); values.push(diagnostico_post); }
+      if (diagnostico_post !== undefined) { fields.push(`diagnostico_post = $${queryIndex++}`); values.push(encryptSensitiveData(diagnostico_post)); }
       if (resultado !== undefined) { fields.push(`resultado = $${queryIndex++}`); values.push(resultado); }
       
       let cirugiaActualizada = null;
@@ -226,7 +236,7 @@ const Cirugia = {
 
       await client.query('COMMIT');
 
-      return cirugiaActualizada || (await this.findById(id));
+      return decryptDiagnosticos(cirugiaActualizada || (await this.findById(id)));
     } catch (error) {
       await client.query('ROLLBACK');
       console.error('Error al actualizar cirugía en el modelo:', error);

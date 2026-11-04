@@ -1,6 +1,5 @@
 // middleware/authMiddleware.js
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const { verifyToken } = require('../utils/cryptoService');
 
 // Middleware para verificar si el usuario tiene un token válido
 const protegerRuta = (req, res, next) => {
@@ -12,7 +11,7 @@ const protegerRuta = (req, res, next) => {
   }
 
   try {
-    const decifrado = jwt.verify(token, process.env.JWT_SECRET);
+    const decifrado = verifyToken(token);
     req.usuario = decifrado.usuario; // Adjuntamos el payload del token a la petición
     next(); // El token es válido, puede continuar
   } catch (error) {

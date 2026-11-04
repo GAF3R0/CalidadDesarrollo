@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "keys:generate": "node scripts/generate-crypto-keys.js",
+    "admin:bootstrap": "node scripts/bootstrap-admin.js",
+    "data:encrypt-diagnoses": "node scripts/encrypt-existing-diagnoses.js",
+    "test:crypto": "node --test test/crypto.test.js"
   },
   "keywords": [],
   "author": "",
